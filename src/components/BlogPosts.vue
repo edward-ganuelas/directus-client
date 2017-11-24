@@ -2,14 +2,23 @@
   <div class="posts">
     <v-container grid-list-md text-xs-center>
       <v-layout row wrap>
-      <v-flex xs12 v-for="post in posts" v-bind:key="post.id">
-        <ul>
-          <li v-for="tag in post.tags.data" :key="tag.id">{{tag.tag}}</li>
-        </ul>
-        <h2>{{post.title}}</h2>
-        <p>{{post.excerpt}}</p>
-        <p><router-link :to="{name: 'Post', params: {id: post.id}}">Read More</router-link>
-        <div v-html="post.postbody"></div>
+      <v-flex xs12 md8 offset-md2 v-for="post in posts" v-bind:key="post.id">
+        <v-card>
+          <v-card-title primary-title>
+            <div>
+              <h2 class="headline">{{post.title}}</h2>
+              <ul>
+                <li v-for="tag in post.tags.data" :key="tag.id">{{tag.tag}}</li>
+              </ul>
+            </div>
+          </v-card-title>
+          <v-card-text>
+            <blockquote>{{post.excerpt}}</blockquote>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn flat :to="{name: 'Post', params: {id: post.id}}">Read More</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-flex>
       </v-layout>
     </v-container>
@@ -33,7 +42,7 @@ export default {
           this.posts = x.data.data;
           sessionStorage.setItem(API.post, JSON.stringify(x.data.data));
         });
-      }else{
+      } else {
         this.posts = JSON.parse(sessionStorage.getItem(API.post));
       }
     }
