@@ -1,6 +1,14 @@
 <template>
   <div class="blog-post">
       <v-container grid-list-md text-xs-center>
+       <v-layout>
+          <v-flex>
+              <v-card-text style="height: 300px;" class="grey lighten-5"></v-card-text>
+              <v-card-text style="height: 100px; position: relative">
+                <v-btn absolute dark fab top right color="red" :to="{name: 'Home'}"><v-icon>home</v-icon></v-btn>
+              </v-card-text>
+          </v-flex>
+      </v-layout>
       <v-layout row wrap>
           <v-flex xs12>
             <h2>{{post.title}}</h2>
@@ -24,13 +32,13 @@ export default {
   },
   methods: {
     getPost: function() {
-        axios.get(API.post + this.id).then(x=>{
-            this.post = x.data.data;
-        })
+      axios.get(API.post + this.id).then(x => {
+        this.post = x.data.data;
+      });
     }
   },
-  beforeMount: function(){
-      this.getPost();
+  beforeMount: function() {
+    this.getPost();
   }
 };
 </script>
