@@ -1,7 +1,5 @@
 <template>
-  <div class="author">
-    <p>{{name}}</p>
-  </div>
+    <p class="author">{{name}}</p>
 </template>
 
 <script>

@@ -3,11 +3,12 @@
     <v-container grid-list-md text-xs-center>
       <v-layout row wrap>
       <v-flex xs12 md8 offset-md2 v-for="post in posts" v-bind:key="post.id">
-        <v-card hover="true">
+        <v-card hover>
           <v-card-title primary-title>
             <div>
               <h2 class="headline">{{post.title}}</h2>
               <author v-bind:author="post.author" v-if="post.author" />
+              <p v-if="post.published_date">Published on {{publishedDate(post.published_date)}}</p>
               <ul v-if="post.tags.data">
                 <li v-for="tag in post.tags.data" :key="tag.id">{{tag.tag}}</li>
               </ul>
@@ -27,9 +28,9 @@
 </template>
 
 <script>
-import { API } from '../constants';
-import axios from 'axios';
-import Author from './Author';
+import { API } from "../constants";
+import axios from "axios";
+import Author from "./Author";
 export default {
   name: "blog-posts",
   data() {
@@ -50,6 +51,10 @@ export default {
       } else {
         this.posts = JSON.parse(sessionStorage.getItem(API.post));
       }
+    },
+    publishedDate: function(published_date) {
+      let date = new Date(published_date);
+      return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
     }
   },
   beforeMount: function() {
