@@ -15,9 +15,14 @@ export default {
   },
   methods: {
     getAuthor: function() {
-      axios.get(API.user + this.author).then(x => {
-        this.name = x.data.data.first_name + " " + x.data.data.last_name;
-      });
+      if (sessionStorage.getItem(API.user + this.author) === null) {
+        axios.get(API.user + this.author).then(x => {
+          this.name = x.data.data.first_name + " " + x.data.data.last_name;
+          sessionStorage.setItem(API.user + this.author, this.name);
+        });
+      }else{
+        this.name = sessionStorage.getItem(API.user + this.author);
+      }
     }
   },
   beforeMount: function() {
