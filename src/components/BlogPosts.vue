@@ -2,12 +2,25 @@
   <div class="posts">
     <v-container grid-list-md text-xs-center>
       <v-layout row wrap>
-      <v-flex xs12 v-for="post in posts" v-bind:key="post.id">
-        <ul>
-          <li v-for="tag in post.tags.data" :key="tag.id">{{tag.tag}}</li>
-        </ul>
-        <h2><router-link :to="{name: 'Post', params: {id: post.id}}">{{post.title}}</router-link></h2>
-        <div v-html="post.postbody"></div>
+      <v-flex xs12 md8 offset-md2 v-for="post in posts" v-bind:key="post.id">
+        <v-card hover>
+          <v-card-title primary-title>
+            <div>
+              <h2 class="headline">{{post.title}}</h2>
+              <author v-bind:author="post.author" v-if="post.author" />
+              <p v-if="post.published_date">Published on {{publishedDate(post.published_date)}}</p>
+              <ul v-if="post.tags.data">
+                <li v-for="tag in post.tags.data" :key="tag.id">{{tag.tag}}</li>
+              </ul>
+            </div>
+          </v-card-title>
+          <v-card-text>
+            <blockquote>{{post.excerpt}}</blockquote>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn flat :to="{name: 'Post', params: {id: post.id}}">Read More</v-btn>
+          </v-card-actions>
+        </v-card>
       </v-flex>
       </v-layout>
     </v-container>
@@ -17,6 +30,7 @@
 <script>
 import { API } from "../constants";
 import axios from "axios";
+import Author from "./Author";
 export default {
   name: "blog-posts",
   data() {
@@ -24,11 +38,23 @@ export default {
       posts: ""
     };
   },
+  components: {
+    Author
+  },
   methods: {
     getPosts: function() {
-      axios.get(API.post).then(x => {
-        this.posts = x.data.data;
-      });
+      if (sessionStorage.getItem(API.post) === null) {
+        axios.get(API.post).then(x => {
+          this.posts = x.data.data;
+          sessionStorage.setItem(API.post, JSON.stringify(x.data.data));
+        });
+      } else {
+        this.posts = JSON.parse(sessionStorage.getItem(API.post));
+      }
+    },
+    publishedDate: function(published_date) {
+      let date = new Date(published_date);
+      return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
     }
   },
   beforeMount: function() {
@@ -39,7 +65,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.posts{
+.posts {
   width: 100%;
 }
 ul {
