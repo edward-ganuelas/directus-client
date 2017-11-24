@@ -3,11 +3,12 @@
     <v-container grid-list-md text-xs-center>
       <v-layout row wrap>
       <v-flex xs12 md8 offset-md2 v-for="post in posts" v-bind:key="post.id">
-        <v-card>
+        <v-card hover="true">
           <v-card-title primary-title>
             <div>
               <h2 class="headline">{{post.title}}</h2>
-              <ul>
+              <author v-bind:author="post.author" v-if="post.author" />
+              <ul v-if="post.tags.data">
                 <li v-for="tag in post.tags.data" :key="tag.id">{{tag.tag}}</li>
               </ul>
             </div>
@@ -26,14 +27,18 @@
 </template>
 
 <script>
-import { API } from "../constants";
-import axios from "axios";
+import { API } from '../constants';
+import axios from 'axios';
+import Author from './Author';
 export default {
   name: "blog-posts",
   data() {
     return {
       posts: ""
     };
+  },
+  components: {
+    Author
   },
   methods: {
     getPosts: function() {
