@@ -1,33 +1,16 @@
 <template>
   <div id="app">
-    <blog-posts v-bind:posts="posts"></blog-posts>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import BlogPosts from "./components/BlogPosts";
-import { API } from "./constants";
 export default {
   name: "app",
   data() {
-    return {
-      posts: ""
-    }
+    return {};
   },
-  components: {
-    BlogPosts
-  },
-  methods: {
-    getPosts: function() {
-      axios.get(API.post).then(x => {
-        this.posts = x.data.data;
-      });
-    }
-  },
-  beforeMount: function() {
-    this.getPosts();
-  }
+  components: {},
 };
 </script>
 
