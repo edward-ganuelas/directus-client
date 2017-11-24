@@ -1,7 +1,13 @@
 <template>
   <div class="blog-post">
-      <h2>{{post.title}}</h2>
-      <div v-html="post.content"></div>
+      <v-container grid-list-md text-xs-center>
+      <v-layout row wrap>
+          <v-flex xs12>
+            <h2>{{post.title}}</h2>
+            <div v-html="post.content"></div>
+          </v-flex>
+      </v-layout>
+      </v-container>
   </div>
 </template>
 
