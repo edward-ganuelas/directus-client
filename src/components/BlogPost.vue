@@ -32,9 +32,14 @@ export default {
   },
   methods: {
     getPost: function() {
-      axios.get(API.post + this.id).then(x => {
-        this.post = x.data.data;
-      });
+      if (sessionStorage.getItem(API.post + this.id) === null) {
+        axios.get(API.post + this.id).then(x => {
+          this.post = x.data.data;
+          sessionStorage.setItem(API.post + this.id, JSON.stringify(this.post));
+        });
+      } else {
+        this.post = JSON.parse(sessionStorage.getItem(API.post + this.id));
+      }
     }
   },
   beforeMount: function() {
