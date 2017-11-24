@@ -4,7 +4,7 @@
       <ul>
         <li v-for="tag in post.tags.data" :key="tag.id">{{tag.tag}}</li>
       </ul>
-      <h2><router-link to="/post">{{post.title}}</router-link></h2>
+      <h2><router-link :to="{name: 'Post', params: {id: post.id}}">{{post.title}}</router-link></h2>
       <div v-html="post.postbody"></div>
     </div>
   </div>
