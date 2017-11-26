@@ -20,7 +20,7 @@ export default {
 
 <style lang="scss">
 :root:root:root html, :root:root:root body, .application{
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Lora', serif;
 }
 
 </style>
