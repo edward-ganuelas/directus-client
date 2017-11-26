@@ -1,6 +1,7 @@
 <template>
   <div class="posts">
-    <v-container grid-list-md text-xs-center>
+    <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="posts === ''"></v-progress-circular>
+    <v-container grid-list-md text-xs-center v-if="posts !== ''">
       <v-layout row wrap>
       <v-flex xs12 md8 offset-md2 v-for="post in posts" v-bind:key="post.id">
         <v-card hover>
@@ -75,5 +76,11 @@ ul {
     display: inline-block;
     margin-right: 10px;
   }
+}
+.progress-circular {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

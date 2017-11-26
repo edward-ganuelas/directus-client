@@ -1,6 +1,7 @@
 <template>
   <div class="blog-post">
-      <v-container grid-list-md text-xs-center>
+    <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="post === ''"></v-progress-circular>
+      <v-container grid-list-md text-xs-center v-if="post !== ''">
        <v-layout>
           <v-flex>
               <v-card-text style="height: 300px;" class="grey lighten-5"></v-card-text>
@@ -24,12 +25,12 @@
 <script>
 import axios from "axios";
 import { API } from "../constants";
-import Author from "./Author"
+import Author from "./Author";
 export default {
   name: "BlogPost",
   props: ["id"],
   components: {
-      Author
+    Author
   },
   data() {
     return {
@@ -60,5 +61,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.progress-circular {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>
