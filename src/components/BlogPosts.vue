@@ -6,14 +6,14 @@
       <v-flex xs12 md8 offset-md2 v-for="post in posts" v-bind:key="post.id">
         <v-card hover>
           <v-card-title primary-title>
-            <div>
+            <v-flex xs12>
               <h2 class="headline">{{post.title}}</h2>
               <author v-bind:author="post.author" v-if="post.author" />
               <p v-if="post.published_date">Published on {{publishedDate(post.published_date)}}</p>
-              <ul v-if="post.tags.data">
+              <ul v-if="post.tags.data" class="tags">
                 <li v-for="tag in post.tags.data" :key="tag.id">{{tag.tag}}</li>
               </ul>
-            </div>
+            </v-flex>
           </v-card-title>
           <v-card-text>
             <blockquote>{{post.excerpt}}</blockquote>
@@ -72,9 +72,13 @@ export default {
 ul {
   display: flex;
   flex-wrap: nowrap;
+  padding: 0 8px;
   li {
     display: inline-block;
     margin-right: 10px;
+    border-radius: 20px;
+    border: solid 1px #0066ff;
+    padding: 8px;
   }
 }
 .progress-circular {
