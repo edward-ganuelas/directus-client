@@ -11,7 +11,7 @@
               <author v-bind:author="post.author" v-if="post.author" />
               <p v-if="post.published_date">Published on {{publishedDate(post.published_date)}}</p>
               <ul v-if="post.tags.data" class="tags">
-                <li v-for="tag in post.tags.data" :key="tag.id">{{tag.tag}}</li>
+                <li v-for="tag in post.tags.data" :key="tag.id"><v-chip>{{tag.tag}}</v-chip></li>
               </ul>
             </v-flex>
           </v-card-title>
@@ -76,9 +76,6 @@ ul {
   li {
     display: inline-block;
     margin-right: 10px;
-    border-radius: 20px;
-    border: solid 1px #0066ff;
-    padding: 8px;
   }
 }
 .progress-circular {
