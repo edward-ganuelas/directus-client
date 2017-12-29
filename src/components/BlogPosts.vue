@@ -7,14 +7,14 @@
               <v-card-text class="grey lighten-5"></v-card-text>
               <v-card-text style="height: 100px; position: relative">
                  <v-btn
-              absolute
-              dark
-              fab
-              bottom
-              right
-              color="red"
-              :to="{name: 'EightRay'}"
-            >
+                  absolute
+                  dark
+                  fab
+                  bottom
+                  right
+                  color="red"
+                  :to="{name: 'EightRay'}"
+               >
               <v-icon>home</v-icon>
             </v-btn>
               </v-card-text>

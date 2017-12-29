@@ -1,15 +1,29 @@
 <template>
   <div class="blog-post">
+     <v-speed-dial
+
+            absolute=true
+            right=true
+            direction="bottom"
+            :hover=false
+            transition="slide-y-reverse-transition"
+          >
+          <v-btn
+            slot="activator"
+            color="blue darken-2"
+            dark
+            fab
+            hover
+
+          >
+          <v-icon>toc</v-icon>
+          <v-icon>close</v-icon>
+         </v-btn>
+          <v-btn dark fab small color="orange" :to="{name: 'Home'}"><v-icon>keyboard_backspace</v-icon></v-btn>
+          <v-btn dark fab small color="red":to="{name: 'EightRay'}"><v-icon>home</v-icon></v-btn>
+         </v-speed-dial>
     <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="post === ''"></v-progress-circular>
       <v-container grid-list-md text-xs-center v-if="post !== ''">
-       <v-layout>
-          <v-flex>
-              <v-card-text class="grey lighten-5"></v-card-text>
-              <v-card-text style="height: 100px; position: relative">
-                <v-btn absolute dark fab top right color="red" :to="{name: 'Home'}"><v-icon>keyboard_backspace</v-icon></v-btn>
-              </v-card-text>
-          </v-flex>
-      </v-layout>
       <v-layout row wrap>
           <v-flex xs12 md8 offset-md2>
             <h2>{{post.title}}</h2>
@@ -19,6 +33,7 @@
           </v-flex>
       </v-layout>
       </v-container>
+     
   </div>
 </template>
 
@@ -70,4 +85,5 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 </style>
