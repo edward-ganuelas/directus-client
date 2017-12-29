@@ -1,6 +1,6 @@
 <template>
   <div class="blog-post">
-    <v-card-text style="height: 100px; position: relative">
+    <v-card-text class="fab-wrapper">
      <v-speed-dial
 
             absolute=true
@@ -86,6 +86,9 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.fab-wrapper{
+  height: 100px;
 }
 
 </style>

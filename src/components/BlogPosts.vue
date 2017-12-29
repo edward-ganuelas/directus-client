@@ -4,8 +4,7 @@
     <v-container grid-list-md text-xs-center v-if="posts !== ''">
        <v-layout>
           <v-flex>
-              <v-card-text class="grey lighten-5"></v-card-text>
-              <v-card-text style="height: 100px; position: relative">
+              <v-card-text class="fab-wrapper">
                  <v-btn
                   absolute
                   dark
@@ -102,4 +101,5 @@ ul {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 </style>

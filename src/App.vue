@@ -42,6 +42,16 @@ export default {
 }
 .header{
   padding: 16px;
+  text-align: center;
+  @media(min-width: 768px){
+    text-align: left;
+  }
+}
+.fab-wrapper{
+  position: relative;
+  @media(min-width: 768px){
+      height: 100px; 
+  }
 }
 
 </style>
