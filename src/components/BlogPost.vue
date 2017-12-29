@@ -1,5 +1,6 @@
 <template>
   <div class="blog-post">
+    <v-card-text style="height: 100px; position: relative">
      <v-speed-dial
 
             absolute=true
@@ -22,6 +23,7 @@
           <v-btn dark fab small color="orange" :to="{name: 'Home'}"><v-icon>keyboard_backspace</v-icon></v-btn>
           <v-btn dark fab small color="red":to="{name: 'EightRay'}"><v-icon>home</v-icon></v-btn>
          </v-speed-dial>
+    </v-card-text>
     <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="post === ''"></v-progress-circular>
       <v-container grid-list-md text-xs-center v-if="post !== ''">
       <v-layout row wrap>
