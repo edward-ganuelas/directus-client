@@ -1,9 +1,25 @@
 <template>
   <div id="app">
     <v-app>
+      <v-content>
+      <v-container grid-list-xs>
+        <v-layout row>
+          <v-flex xs12>
+            <h1>Blog</h1>
+            <p>By EightRayedSun</p>
+          </v-flex>
+        </v-layout>
+      </v-container>
       <main>
         <router-view></router-view>
       </main>
+      </v-content>
+      <v-footer>
+          <v-container>
+            <v-spacer></v-spacer>
+            <div><p class="text-xs-center"><a href="https://eightrayesun.com">EightRayedSun</a></p></div>
+          </v-container>
+        </v-footer>
     </v-app>
   </div>
 </template>

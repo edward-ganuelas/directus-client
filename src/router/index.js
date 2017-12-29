@@ -17,6 +17,13 @@ export default new Router({
             name: 'Post',
             component: BlogPost,
             props: true
+        },
+        {
+            path: '../',
+            name: 'EightRay',
+            beforeEnter: () =>{
+                window.location.href = "https://eightrayedsun.com";
+            }
         }
     ]
 })

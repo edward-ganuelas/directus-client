@@ -2,6 +2,24 @@
   <div class="posts">
     <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="posts === ''"></v-progress-circular>
     <v-container grid-list-md text-xs-center v-if="posts !== ''">
+       <v-layout>
+          <v-flex>
+              <v-card-text class="grey lighten-5"></v-card-text>
+              <v-card-text style="height: 100px; position: relative">
+                 <v-btn
+                  absolute
+                  dark
+                  fab
+                  bottom
+                  right
+                  color="red"
+                  :to="{name: 'EightRay'}"
+               >
+              <v-icon>home</v-icon>
+            </v-btn>
+              </v-card-text>
+          </v-flex>
+      </v-layout>
       <v-layout row wrap>
       <v-flex xs12 md8 offset-md2 v-for="post in posts" v-bind:key="post.id">
         <v-card hover>
@@ -11,7 +29,7 @@
               <author v-bind:author="post.author" v-if="post.author" />
               <p v-if="post.published_date">Published on {{publishedDate(post.published_date)}}</p>
               <ul v-if="post.tags.data" class="tags">
-                <li v-for="tag in post.tags.data" :key="tag.id">{{tag.tag}}</li>
+                <li v-for="tag in post.tags.data" :key="tag.id"><v-chip>{{tag.tag}}</v-chip></li>
               </ul>
             </v-flex>
           </v-card-title>
@@ -76,9 +94,6 @@ ul {
   li {
     display: inline-block;
     margin-right: 10px;
-    border-radius: 20px;
-    border: solid 1px #0066ff;
-    padding: 8px;
   }
 }
 .progress-circular {
