@@ -89,7 +89,7 @@ export default {
 }
 ul {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   padding: 0 8px;
   li {
     display: inline-block;

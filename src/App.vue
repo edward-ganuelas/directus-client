@@ -5,8 +5,10 @@
       <v-container grid-list-xs>
         <v-layout row>
           <v-flex xs12>
-            <h1>Blog</h1>
-            <p>By EightRayedSun</p>
+            <div class="header">
+              <h1>Blog</h1>
+              <p>By EightRayedSun</p>
+            </div>
           </v-flex>
         </v-layout>
       </v-container>
@@ -37,6 +39,9 @@ export default {
 <style lang="scss">
 :root:root:root html, :root:root:root body, .application{
   font-family: 'Lora', serif;
+}
+.header{
+  padding: 16px;
 }
 
 </style>
