@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss">
-:root:root:root html, :root:root:root body, .application{
+:root:root:root html, :root:root:root body, :root:root:root body .application{
   font-family: 'Lora', serif;
 }
 .header{
