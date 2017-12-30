@@ -1,29 +1,5 @@
 <template>
   <div class="blog-post">
-    <v-card-text style="height: 100px; position: relative">
-     <v-speed-dial
-
-            absolute=true
-            right=true
-            direction="bottom"
-            :hover=false
-            transition="slide-y-reverse-transition"
-          >
-          <v-btn
-            slot="activator"
-            color="blue darken-2"
-            dark
-            fab
-            hover
-
-          >
-          <v-icon>toc</v-icon>
-          <v-icon>close</v-icon>
-         </v-btn>
-          <v-btn dark fab small color="orange" :to="{name: 'Home'}"><v-icon>keyboard_backspace</v-icon></v-btn>
-          <v-btn dark fab small color="red":to="{name: 'EightRay'}"><v-icon>home</v-icon></v-btn>
-         </v-speed-dial>
-    </v-card-text>
     <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="post === ''"></v-progress-circular>
       <v-container grid-list-md text-xs-center v-if="post !== ''">
       <v-layout row wrap>
@@ -34,8 +10,31 @@
             <div v-html="post.content"></div>
           </v-flex>
       </v-layout>
+       <v-card-text class="fab-wrapper">
+        <v-speed-dial
+
+                absolute=true
+                right=true
+                direction="top"
+                :hover=false
+                transition="slide-y-reverse-transition"
+              >
+              <v-btn
+                slot="activator"
+                color="blue darken-2"
+                dark
+                fab
+                hover
+
+              >
+              <v-icon>toc</v-icon>
+              <v-icon>close</v-icon>
+            </v-btn>
+              <v-btn dark fab small color="orange" :to="{name: 'Home'}"><v-icon>keyboard_backspace</v-icon></v-btn>
+              <v-btn dark fab small color="red" :to="{name: 'EightRay'}"><v-icon>home</v-icon></v-btn>
+            </v-speed-dial>
+        </v-card-text>
       </v-container>
-     
   </div>
 </template>
 
@@ -86,6 +85,17 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.fab-wrapper{
+  height: 100px;
+}
+.bottom-nav-wrap{
+  height: 200px;
+   position: absolute;
+   bottom: 80px;
+   .bottom-nav{
+    bottom: 70px;
+  }
 }
 
 </style>

@@ -2,24 +2,6 @@
   <div class="posts">
     <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="posts === ''"></v-progress-circular>
     <v-container grid-list-md text-xs-center v-if="posts !== ''">
-       <v-layout>
-          <v-flex>
-              <v-card-text class="grey lighten-5"></v-card-text>
-              <v-card-text style="height: 100px; position: relative">
-                 <v-btn
-                  absolute
-                  dark
-                  fab
-                  bottom
-                  right
-                  color="red"
-                  :to="{name: 'EightRay'}"
-               >
-              <v-icon>home</v-icon>
-            </v-btn>
-              </v-card-text>
-          </v-flex>
-      </v-layout>
       <v-layout row wrap>
       <v-flex xs12 md8 offset-md2 v-for="post in posts" v-bind:key="post.id">
         <v-card hover>
@@ -40,8 +22,22 @@
             <v-btn flat :to="{name: 'Post', params: {id: post.id}}">Read More</v-btn>
           </v-card-actions>
         </v-card>
-      </v-flex>
+      </v-flex>      
       </v-layout>
+
+        <v-card-text class="fab-wrapper">
+            <v-btn
+            absolute
+            dark
+            fab
+            bottom=true
+            right
+            color="red"
+            :to="{name: 'EightRay'}" >
+        <v-icon>home</v-icon>
+          </v-btn>
+        </v-card-text>
+         
     </v-container>
   </div>
 </template>
@@ -102,4 +98,5 @@ ul {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 </style>
