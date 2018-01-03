@@ -50,7 +50,8 @@ export default {
   },
   data() {
     return {
-      post: ""
+      post: "",
+      keywords: ""
     };
   },
   methods: {
@@ -58,6 +59,7 @@ export default {
       if (sessionStorage.getItem(API.post + this.id) === null) {
         axios.get(API.post + this.id).then(x => {
           this.post = x.data.data;
+
           sessionStorage.setItem(API.post + this.id, JSON.stringify(this.post));
         });
       } else {
@@ -67,6 +69,13 @@ export default {
     publishedDate: function(published_date) {
       let date = new Date(published_date);
       return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+    },
+    getKeyWords: function(){
+      let keywords = [];
+      this.post.tags.data.forEach(x => {
+        keywords.push(x.tag);
+      })
+      return keywords.join();
     }
   },
   beforeMount: function() {
@@ -78,9 +87,12 @@ export default {
         inner: this.post.title
       }
     },
-    meta: [
-     
-    ]
+    meta: function(){
+      return [
+        {name: 'description', content: this.post.excerpt },
+        {name: 'keywords', content: this.getKeyWords() },
+      ]
+    }
   }
 };
 </script>
