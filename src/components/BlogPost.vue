@@ -13,8 +13,8 @@
        <v-card-text class="fab-wrapper">
         <v-speed-dial
 
-                absolute=true
-                right=true
+                absolute
+                right
                 direction="top"
                 :hover=false
                 transition="slide-y-reverse-transition"
@@ -71,6 +71,16 @@ export default {
   },
   beforeMount: function() {
     this.getPost();
+  },
+  head:{
+    title: function(){
+      return {
+        inner: this.post.title
+      }
+    },
+    meta: [
+     
+    ]
   }
 };
 </script>
