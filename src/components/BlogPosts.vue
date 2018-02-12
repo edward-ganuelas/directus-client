@@ -30,7 +30,6 @@
             absolute
             dark
             fab
-            bottom=true
             right
             color="red"
             :to="{name: 'EightRay'}" >
