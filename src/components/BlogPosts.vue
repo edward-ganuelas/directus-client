@@ -3,7 +3,11 @@
     <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="posts === ''"></v-progress-circular>
     <v-container grid-list-md text-xs-center v-if="posts !== ''">
       <v-layout row wrap>
-      <v-flex xs12 md8 offset-md2 v-for="post in orderedPosts" v-bind:key="post.id">
+      <v-flex xs-12 md4 md-offset1>
+        <p>Filters</p>
+      </v-flex>
+      <v-flex xs12 md6>
+      <v-flex xs12 v-for="post in orderedPosts" v-bind:key="post.id">
         <v-card hover>
           <v-card-title primary-title>
             <v-flex xs12>
@@ -23,6 +27,7 @@
           </v-card-actions>
         </v-card>
       </v-flex>      
+      </v-flex>
       </v-layout>
 
         <v-card-text class="fab-wrapper">
