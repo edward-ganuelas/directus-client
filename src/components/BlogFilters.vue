@@ -22,10 +22,15 @@ export default {
     getPosts : async function(){
       let response = await axios.get(API.tags);
       this.data = response.data.data;
+      sessionStorage.setItem(API.tags, JSON.stringify(response.data.data));
     }
   },
   beforeMount: function(){
-    this.getPosts();
+    if (sessionStorage.getItem(API.tags) === null) {
+      this.getPosts();
+    }else{
+      this.data = JSON.parse(sessionStorage.getItem(API.tags));
+    }
   }
 }
 </script>
