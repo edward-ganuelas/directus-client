@@ -3,7 +3,13 @@
     <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="posts === ''"></v-progress-circular>
     <v-container grid-list-md text-xs-center v-if="posts !== ''">
       <v-layout row wrap>
-      <v-flex xs12 md8 offset-md2 v-for="post in orderedPosts" v-bind:key="post.id">
+      <v-flex xs-12 sm4 lg2 offset-lg1>
+        <v-card hover>
+          <blog-filters @clicked="filterClicked" />
+        </v-card>
+      </v-flex>
+      <v-flex xs12 sm8 lg8>
+      <v-flex xs12 v-for="post in orderedPosts" v-bind:key="post.id">
         <v-card hover>
           <v-card-title primary-title>
             <v-flex xs12>
@@ -23,6 +29,7 @@
           </v-card-actions>
         </v-card>
       </v-flex>      
+      </v-flex>
       </v-layout>
 
         <v-card-text class="fab-wrapper">
@@ -44,27 +51,33 @@
 <script>
 import { API } from "../constants";
 import axios from "axios";
+import BlogFilters from "./BlogFilters";
 import Author from "./Author";
 import _ from "lodash";
 export default {
   name: "blog-posts",
   data() {
     return {
-      posts: ""
+      posts: "",
+      originalPosts: "",
+      filter: ""
     };
   },
   components: {
-    Author
+    Author,
+    BlogFilters
   },
   methods: {
     getPosts: function() {
       if (sessionStorage.getItem(API.post) === null) {
         axios.get(API.post).then(x => {
           this.posts = x.data.data;
+          this.originalPosts = this.posts.slice();
           sessionStorage.setItem(API.post, JSON.stringify(x.data.data));
         });
       } else {
         this.posts = JSON.parse(sessionStorage.getItem(API.post));
+        this.originalPosts = this.posts.slice();
       }
     },
     publishedDate: function(published_date) {
@@ -72,11 +85,33 @@ export default {
       const months = ["January", "February", "March", "April", "May", "June", "July",
          "August", "September", "October", "November", "December"];
       return date.getDate() + "/" +months[date.getMonth()] + "/" + date.getFullYear();
+    },
+    filterClicked: function(data){
+     this.filter = data;
+    },
+    resetPosts: function(){
+      this.posts = this.originalPosts.slice();
     }
   },
   computed: {
     orderedPosts: function(){
       return _.sortBy(this.posts, x => {return new Date(x.published_date)}).reverse();
+    }
+  },
+  watch: {
+    filter: function(value){
+      this.resetPosts();
+      let filteredPosts = this.posts.slice();
+      filteredPosts = filteredPosts.filter((x) =>{
+        let filterCheck = false;
+        x.tags.data.forEach(element => {
+          if(element.tag === value){
+            filterCheck = true;
+          }
+        });
+        return filterCheck;
+      });
+      this.posts = filteredPosts;
     }
   },
   beforeMount: function() {
@@ -94,9 +129,18 @@ ul {
   display: flex;
   flex-wrap: wrap;
   padding: 0 8px;
+  width: 100%;
   li {
     display: inline-block;
     margin-right: 10px;
+    &:first-child{
+      margin-left: 18px;
+    }
+  }
+}
+.card__actions{
+  .btn{
+    margin-left: 18px;
   }
 }
 .progress-circular {
