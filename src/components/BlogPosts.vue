@@ -4,7 +4,7 @@
     <v-container grid-list-md text-xs-center v-if="posts !== ''">
       <v-layout row wrap>
       <v-flex xs-12 md4 md-offset1>
-        <p>Filters</p>
+        <blog-filters />
       </v-flex>
       <v-flex xs12 md6>
       <v-flex xs12 v-for="post in orderedPosts" v-bind:key="post.id">
@@ -49,6 +49,7 @@
 <script>
 import { API } from "../constants";
 import axios from "axios";
+import BlogFilters from "./BlogFilters";
 import Author from "./Author";
 import _ from "lodash";
 export default {
@@ -59,7 +60,8 @@ export default {
     };
   },
   components: {
-    Author
+    Author,
+    BlogFilters
   },
   methods: {
     getPosts: function() {
@@ -99,9 +101,18 @@ ul {
   display: flex;
   flex-wrap: wrap;
   padding: 0 8px;
+  width: 100%;
   li {
     display: inline-block;
     margin-right: 10px;
+    &:first-child{
+      margin-left: 18px;
+    }
+  }
+}
+.card__actions{
+  .btn{
+    margin-left: 18px;
   }
 }
 .progress-circular {
