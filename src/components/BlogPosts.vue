@@ -3,12 +3,12 @@
     <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="posts === ''"></v-progress-circular>
     <v-container grid-list-md text-xs-center v-if="posts !== ''">
       <v-layout row wrap>
-      <v-flex xs-12 md2>
+      <v-flex xs-12 sm4 lg2 offset-lg1>
         <v-card hover>
           <blog-filters @clicked="filterClicked" />
         </v-card>
       </v-flex>
-      <v-flex xs12 md8>
+      <v-flex xs12 sm8 lg8>
       <v-flex xs12 v-for="post in orderedPosts" v-bind:key="post.id">
         <v-card hover>
           <v-card-title primary-title>
