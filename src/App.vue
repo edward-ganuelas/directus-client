@@ -37,7 +37,12 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Lora|Open+Sans');
 :root:root:root html, :root:root:root body, :root:root:root body .application{
+  font-family: 'Open Sans', sans-serif;
+}
+h1, h2, h3, h4, h5, h6{
   font-family: 'Lora', serif;
 }
 .header{
