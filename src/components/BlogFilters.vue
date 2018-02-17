@@ -2,7 +2,7 @@
   <div class="filters">
     <h3>Filters</h3>
     <ul>
-      <li v-for="tag in data" v-bind:id="tag.id">{{tag.tag}}</li>
+      <li v-for="tag in data" v-bind:id="tag.id"><v-btn @click="onFilterClick(tag.tag)">{{tag.tag}}</v-btn></li>
     </ul>
   </div>
 </template>
@@ -23,6 +23,9 @@ export default {
       let response = await axios.get(API.tags);
       this.data = response.data.data;
       sessionStorage.setItem(API.tags, JSON.stringify(response.data.data));
+    },
+    onFilterClick: function(test){
+      this.$emit('clicked', test);
     }
   },
   beforeMount: function(){
@@ -36,8 +39,14 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="scss">
+.filters{
+  padding: 18px;
+}
   ul{
     list-style-type: none;
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
   }
 </style>
