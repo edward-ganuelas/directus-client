@@ -51,7 +51,10 @@ export default {
   data() {
     return {
       post: "",
-      keywords: ""
+      keywords: "",
+      title: "",
+      keywords: "",
+      description: ""
     };
   },
   methods: {
@@ -59,16 +62,22 @@ export default {
       if (sessionStorage.getItem(API.post + this.id) === null) {
         axios.get(API.post + this.id).then(x => {
           this.post = x.data.data;
-
           sessionStorage.setItem(API.post + this.id, JSON.stringify(this.post));
+          this.updateMetaData();
         });
       } else {
         this.post = JSON.parse(sessionStorage.getItem(API.post + this.id));
+        this.updateMetaData();
       }
     },
     publishedDate: function(published_date) {
       let date = new Date(published_date);
       return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+    },
+    updateMetaData: function(){
+      this.title = this.post.title;
+      this.keywords = this.getKeyWords();
+      this.description = this.post.excerpt;
     },
     getKeyWords: function(){
       let keywords = [];
@@ -80,17 +89,20 @@ export default {
   },
   beforeMount: function() {
     this.getPost();
+    window.setTimeout(()=>{
+      this.$emit('updateHead');
+    }, 2000);
   },
   head:{
     title: function(){
       return {
-        inner: this.post.title
+        inner: this.title
       }
     },
     meta: function(){
       return [
-        {name: 'description', content: this.post.excerpt },
-        {name: 'keywords', content: this.getKeyWords() },
+        {name: 'description', content: this.description },
+        {name: 'keywords', content: this.description },
       ]
     }
   }
