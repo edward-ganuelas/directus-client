@@ -14,19 +14,18 @@ export default {
     };
   },
   methods: {
-    getAuthor: function() {
-      if (sessionStorage.getItem(API.user + this.author) === null) {
-        axios.get(API.user + this.author).then(x => {
-          this.name = x.data.data.first_name + " " + x.data.data.last_name;
-          sessionStorage.setItem(API.user + this.author, this.name);
-        });
-      }else{
-        this.name = sessionStorage.getItem(API.user + this.author);
-      }
+    getAuthor: async function() {
+      let response = await axios.get(API.user + this.author);
+      this.name = response.data.data.first_name + " " + response.data.data.last_name;
+      sessionStorage.setItem(API.user + this.author, this.name);
     }
   },
   beforeMount: function() {
-    this.getAuthor();
+    if (sessionStorage.getItem(API.user + this.author) === null) {
+      this.getAuthor();
+    }else{
+      this.name = sessionStorage.getItem(API.user + this.author);
+    }
   }
 };
 </script>

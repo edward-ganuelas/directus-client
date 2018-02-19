@@ -68,17 +68,11 @@ export default {
     BlogFilters
   },
   methods: {
-    getPosts: function() {
-      if (sessionStorage.getItem(API.post) === null) {
-        axios.get(API.post).then(x => {
-          this.posts = x.data.data;
-          this.originalPosts = this.posts.slice();
-          sessionStorage.setItem(API.post, JSON.stringify(x.data.data));
-        });
-      } else {
-        this.posts = JSON.parse(sessionStorage.getItem(API.post));
+    getPosts: async function() {
+      let response = await axios.get(API.post)
+        this.posts = response.data.data;
         this.originalPosts = this.posts.slice();
-      }
+        sessionStorage.setItem(API.post, JSON.stringify(response.data.data));
     },
     publishedDate: function(published_date) {
       let date = new Date(published_date);
@@ -115,7 +109,12 @@ export default {
     }
   },
   beforeMount: function() {
-    this.getPosts();
+    if (sessionStorage.getItem(API.post) === null) {
+      this.getPosts();
+    }else {
+      this.posts = JSON.parse(sessionStorage.getItem(API.post));
+      this.originalPosts = this.posts.slice();
+    }
   }
 };
 </script>

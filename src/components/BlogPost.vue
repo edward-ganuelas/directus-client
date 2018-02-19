@@ -58,17 +58,14 @@ export default {
     };
   },
   methods: {
-    getPost: function() {
-      if (sessionStorage.getItem(API.post + this.id) === null) {
-        axios.get(API.post + this.id).then(x => {
-          this.post = x.data.data;
+  getPost: async function() {  
+      let response = await axios.get(API.post + this.id);
+          this.post = response.data.data;
           sessionStorage.setItem(API.post + this.id, JSON.stringify(this.post));
-          this.updateMetaData();
-        });
-      } else {
-        this.post = JSON.parse(sessionStorage.getItem(API.post + this.id));
-        this.updateMetaData();
-      }
+          window.setTimeout(()=>{
+            this.updateMetaData();
+            this.$emit('updateHead');
+          }, 2000);
     },
     publishedDate: function(published_date) {
       let date = new Date(published_date);
@@ -88,10 +85,12 @@ export default {
     }
   },
   beforeMount: function() {
-    this.getPost();
-    window.setTimeout(()=>{
-      this.$emit('updateHead');
-    }, 2000);
+    if (sessionStorage.getItem(API.post + this.id) === null) {
+      this.getPost();
+    } else {
+        this.post = JSON.parse(sessionStorage.getItem(API.post + this.id));
+        this.updateMetaData();
+    }
   },
   head:{
     title: function(){
