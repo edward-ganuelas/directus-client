@@ -142,6 +142,9 @@ ul {
     margin-left: 18px;
   }
 }
+.card{
+  margin-bottom: 18px;
+}
 .progress-circular {
   position: fixed;
   top: 50%;
