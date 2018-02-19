@@ -51,24 +51,30 @@ export default {
   data() {
     return {
       post: "",
-      keywords: ""
+      keywords: "",
+      title: "",
+      keywords: "",
+      description: ""
     };
   },
   methods: {
-    getPost: function() {
-      if (sessionStorage.getItem(API.post + this.id) === null) {
-        axios.get(API.post + this.id).then(x => {
-          this.post = x.data.data;
-
+  getPost: async function() {  
+      let response = await axios.get(API.post + this.id);
+          this.post = response.data.data;
           sessionStorage.setItem(API.post + this.id, JSON.stringify(this.post));
-        });
-      } else {
-        this.post = JSON.parse(sessionStorage.getItem(API.post + this.id));
-      }
+          window.setTimeout(()=>{
+            this.updateMetaData();
+            this.$emit('updateHead');
+          }, 2000);
     },
     publishedDate: function(published_date) {
       let date = new Date(published_date);
       return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+    },
+    updateMetaData: function(){
+      this.title = this.post.title;
+      this.keywords = this.getKeyWords();
+      this.description = this.post.excerpt;
     },
     getKeyWords: function(){
       let keywords = [];
@@ -79,18 +85,23 @@ export default {
     }
   },
   beforeMount: function() {
-    this.getPost();
+    if (sessionStorage.getItem(API.post + this.id) === null) {
+      this.getPost();
+    } else {
+        this.post = JSON.parse(sessionStorage.getItem(API.post + this.id));
+        this.updateMetaData();
+    }
   },
   head:{
     title: function(){
       return {
-        inner: this.post.title
+        inner: this.title
       }
     },
     meta: function(){
       return [
-        {name: 'description', content: this.post.excerpt },
-        {name: 'keywords', content: this.getKeyWords() },
+        {name: 'description', content: this.description },
+        {name: 'keywords', content: this.description },
       ]
     }
   }

@@ -19,7 +19,7 @@ export default {
     }
   },
   methods: {
-    getPosts : async function(){
+    getFilters : async function(){
       let response = await axios.get(API.tags);
       this.data = response.data.data;
       sessionStorage.setItem(API.tags, JSON.stringify(response.data.data));
@@ -30,7 +30,7 @@ export default {
   },
   beforeMount: function(){
     if (sessionStorage.getItem(API.tags) === null) {
-      this.getPosts();
+      this.getFilters();
     }else{
       this.data = JSON.parse(sessionStorage.getItem(API.tags));
     }

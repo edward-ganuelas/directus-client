@@ -6,7 +6,7 @@
         <v-layout row>
           <v-flex xs12>
             <div class="header">
-              <h1>Blog</h1>
+              <h1><router-link :to="{name: 'Home'}">Blog</router-link></h1>
               <p>By EightRayedSun</p>
             </div>
           </v-flex>
@@ -44,6 +44,12 @@ export default {
 }
 h1, h2, h3, h4, h5, h6{
   font-family: 'Lora', serif;
+}
+:root:root:root h1{
+  a{
+    color: #000;
+    text-decoration: none;
+  }
 }
 .header{
   padding: 16px;
