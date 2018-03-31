@@ -10,7 +10,7 @@
       </v-flex>
       <v-flex xs12 sm8 lg8>
       <transition-group name="fade" leave-active-class="fadeOutRight">
-        <v-flex xs12 v-for="post in posts" v-bind:key="post.id">
+        <v-flex xs12 v-for="post in orderedPosts" v-bind:key="post.id">
           <v-card hover>
             <v-card-title primary-title>
               <v-flex xs12>
