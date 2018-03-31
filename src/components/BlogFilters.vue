@@ -2,6 +2,7 @@
   <div class="filters">
     <h3>Filters</h3>
     <ul>
+      <li><v-btn @click="onFilterClick('clear')">Clear</v-btn></li>
       <li v-for="tag in data" v-bind:id="tag.id" :key="tag.id"><v-btn @click="onFilterClick(tag.tag)">{{tag.tag}}</v-btn></li>
     </ul>
   </div>
@@ -24,8 +25,8 @@ export default {
       this.data = response.data.data;
       sessionStorage.setItem(API.tags, JSON.stringify(response.data.data));
     },
-    onFilterClick: function(test){
-      this.$emit('clicked', test);
+    onFilterClick: function(filter){
+      this.$emit('clicked', filter);
     }
   },
   beforeMount: function(){

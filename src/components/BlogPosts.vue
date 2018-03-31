@@ -118,15 +118,17 @@ export default {
     filter: function(value) {
       this.resetPosts();
       let filteredPosts = this.posts.slice();
-      filteredPosts = filteredPosts.filter(x => {
-        let filterCheck = false;
-        x.tags.data.forEach(element => {
-          if (element.tag === value) {
-            filterCheck = true;
-          }
+      if (value !== "clear") {
+        filteredPosts = filteredPosts.filter(x => {
+          let filterCheck = false;
+          x.tags.data.forEach(element => {
+            if (element.tag === value) {
+              filterCheck = true;
+            }
+          });
+          return filterCheck;
         });
-        return filterCheck;
-      });
+      }
       this.posts = filteredPosts;
     }
   },
