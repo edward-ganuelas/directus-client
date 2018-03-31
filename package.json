@@ -16,7 +16,6 @@
     "vue": "^2.5.2",
     "vue-head": "^2.0.11",
     "vue-router": "^3.0.1",
-    "vue2-animate": "^1.0.4",
     "vuetify": "^0.17.2"
   },
   "devDependencies": {
