@@ -13,7 +13,9 @@
         </v-layout>
       </v-container>
       <main>
-        <router-view></router-view>
+        <transition name="slideLeft" leave-active-class="dissapear">
+          <router-view></router-view>
+        </transition>
       </main>
       </v-content>
       <v-footer>
@@ -63,6 +65,9 @@ h1, h2, h3, h4, h5, h6{
   @media(min-width: 768px){
       height: 100px; 
   }
+}
+.dissapear{
+  display: none;
 }
 
 </style>
