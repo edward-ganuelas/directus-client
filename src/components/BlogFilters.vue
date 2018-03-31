@@ -2,7 +2,7 @@
   <div class="filters">
     <h3>Filters</h3>
     <ul>
-      <li v-for="tag in data" v-bind:id="tag.id"><v-btn @click="onFilterClick(tag.tag)">{{tag.tag}}</v-btn></li>
+      <li v-for="tag in data" v-bind:id="tag.id" :key="tag.id"><v-btn @click="onFilterClick(tag.tag)">{{tag.tag}}</v-btn></li>
     </ul>
   </div>
 </template>

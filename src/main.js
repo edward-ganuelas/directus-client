@@ -6,6 +6,7 @@ import VueHead from 'vue-head'
 import router from './router/index.js';
 import Vuetify from 'vuetify';
 require('../node_modules/vuetify/dist/vuetify.min.css');
+require('vue2-animate/dist/vue2-animate.min.css')
 
 Vue.config.productionTip = false
 
