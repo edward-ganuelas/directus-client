@@ -3,7 +3,7 @@
     <h3>Filters</h3>
     <ul>
       <li><v-btn @click="onFilterClick('clear')">Clear</v-btn></li>
-      <li v-for="tag in filters" v-bind:id="tag.id" :key="tag.id"><v-btn @click="onFilterClick(tag.tag)">{{tag.tag}}</v-btn></li>
+      <li v-for="tag in filters" v-bind:id="tag.id" :key="tag.id"><v-btn @click="onFilterClick(tag.tag)" :disabled="tag.tag === filter">{{tag.tag}}</v-btn></li>
     </ul>
   </div>
 </template>
