@@ -1,7 +1,7 @@
 <template>
   <div class="posts">
-    <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="posts === ''"></v-progress-circular>
-    <v-container grid-list-md text-xs-center v-if="posts !== ''">
+    <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="this.savedPost === ''"></v-progress-circular>
+    <v-container grid-list-md text-xs-center v-if="this.savedPost !== ''">
       <v-layout row wrap>
       <v-flex xs-12 sm4 lg2 offset-lg1>
         <v-card hover>
@@ -72,9 +72,12 @@ export default {
   methods: {
     getPosts: async function() {
       let response = await axios.get(API.post);
-      this.posts = response.data.data;
-      this.originalPosts = this.posts.slice();
-      sessionStorage.setItem(API.post, JSON.stringify(response.data.data));
+      // console.log(response)
+      // let posts = response.data.data;
+      // this.originalPosts = this.posts.slice();
+      // sessionStorage.setItem(API.post, JSON.stringify(response.data.data));
+      // this.$store.commit('updateBlogPosts', JSON.stringify(response.data.data));
+      this.savedPost = response.data.data
     },
     publishedDate: function(published_date) {
       let date = new Date(published_date);
@@ -109,15 +112,23 @@ export default {
   },
   computed: {
     orderedPosts: function() {
-      return _.sortBy(this.posts, x => {
+      return _.sortBy(this.savedPost, x => {
         return new Date(x.published_date);
       }).reverse();
+    },
+    savedPost: {
+      get: function(){
+        return this.$store.getters.getBlogPosts
+      },
+      set: function(value){
+        this.$store.commit('updateBlogPosts', value)
+      }
     }
   },
   watch: {
     filter: function(value) {
       this.resetPosts();
-      let filteredPosts = this.posts.slice();
+      let filteredPosts = this.savedPost;
       if (value !== "clear") {
         filteredPosts = filteredPosts.filter(x => {
           let filterCheck = false;
@@ -133,11 +144,19 @@ export default {
     }
   },
   beforeMount: function() {
-    if (sessionStorage.getItem(API.post) === null) {
+    // if (sessionStorage.getItem(API.post) === null) {
+    //   this.getPosts();
+    // } else {
+    //   // this.posts = JSON.parse(sessionStorage.getItem(API.post));
+    //   this.originalPosts = this.posts.slice();
+    //   this.savedPost = this.posts.slice();
+    // }
+
+    // this.getPosts();
+    if(this.savedPost === ''){
       this.getPosts();
-    } else {
-      this.posts = JSON.parse(sessionStorage.getItem(API.post));
-      this.originalPosts = this.posts.slice();
+    }else{
+
     }
   }
 };
