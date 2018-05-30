@@ -3,7 +3,7 @@
     <h3>Filters</h3>
     <ul>
       <li><v-btn @click="onFilterClick('clear')">Clear</v-btn></li>
-      <li v-for="tag in data" v-bind:id="tag.id" :key="tag.id"><v-btn @click="onFilterClick(tag.tag)">{{tag.tag}}</v-btn></li>
+      <li v-for="tag in filters" v-bind:id="tag.id" :key="tag.id"><v-btn @click="onFilterClick(tag.tag)">{{tag.tag}}</v-btn></li>
     </ul>
   </div>
 </template>
@@ -16,25 +16,52 @@ export default {
   name: 'BlogFilters',
   data () {
     return {
-      data: ""
+      // data: ""
     }
   },
   methods: {
     getFilters : async function(){
       let response = await axios.get(API.tags);
-      this.data = response.data.data;
-      sessionStorage.setItem(API.tags, JSON.stringify(response.data.data));
+      // this.data = response.data.data;
+      this.filters = response.data.data;
+      // sessionStorage.setItem(API.tags, JSON.stringify(response.data.data));
     },
     onFilterClick: function(filter){
-      this.$emit('clicked', filter);
+      // this.$emit('clicked', filter);
+      if(filter === 'clear'){
+        this.filter = ''
+      }else{
+        this.filter = filter;
+      }
+    }
+  },
+  computed:{
+    filters: {
+      get(){
+        return this.$store.getters.getFilters
+      },
+      set(value){
+        this.$store.commit('updateFilters', value)
+      }
+    },
+    filter: {
+      get(){
+        return this.$store.getters.getFilter
+      },
+      set(value){
+        this.$store.commit('updateFilter', value);
+      }
     }
   },
   beforeMount: function(){
-    if (sessionStorage.getItem(API.tags) === null) {
+    if(this.filters === ''){
       this.getFilters();
-    }else{
-      this.data = JSON.parse(sessionStorage.getItem(API.tags));
     }
+    // if (sessionStorage.getItem(API.tags) === null) {
+    //   this.getFilters();
+    // }else{
+    //   this.data = JSON.parse(sessionStorage.getItem(API.tags));
+    // }
   }
 }
 </script>
