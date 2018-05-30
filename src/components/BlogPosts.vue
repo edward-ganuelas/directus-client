@@ -5,7 +5,7 @@
       <v-layout row wrap>
       <v-flex xs-12 sm4 lg2 offset-lg1>
         <v-card hover>
-          <blog-filters @clicked="filterClicked" />
+          <blog-filters />
         </v-card>
       </v-flex>
       <v-flex xs12 sm8 lg8>
@@ -60,9 +60,9 @@ export default {
   name: "blog-posts",
   data() {
     return {
-      posts: "",
-      originalPosts: "",
-      filter: ""
+      // posts: "",
+      // originalPosts: "",
+      // filter: ""
     };
   },
   components: {
@@ -112,7 +112,7 @@ export default {
   },
   computed: {
     orderedPosts: function() {
-      return _.sortBy(this.savedPost, x => {
+      return _.sortBy(this.filteredPosts, x => {
         return new Date(x.published_date);
       }).reverse();
     },
@@ -123,10 +123,31 @@ export default {
       set: function(value){
         this.$store.commit('updateBlogPosts', value)
       }
+    },
+    filter(){
+      return this.$store.getters.getFilter;
+    },
+    filteredPosts() {
+      if(this.filter === ''){
+        return this.savedPost;
+      }
+      let filteredPosts = this.savedPost
+      // filteredPosts = 'test';
+      filteredPosts = filteredPosts.filter(x=>{
+         let filterCheck = false;
+          x.tags.data.forEach(element => {
+            if (element.tag === this.filter) {
+              filterCheck = true;
+            }
+          });
+          return filterCheck;
+      })
+
+      return filteredPosts;
     }
   },
   watch: {
-    filter: function(value) {
+    filtereas: function(value) {
       this.resetPosts();
       let filteredPosts = this.savedPost;
       if (value !== "clear") {
