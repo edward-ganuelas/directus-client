@@ -7,19 +7,20 @@ Vue.use(Vuex)
 const state = {
     BlogPosts: '',
     Filters: '',
-    Filter: ''
+    Filter: '',
+
 }
 
 const getters = {
     getBlogPosts: (state) => state.BlogPosts,
     getFilters: state => state.Filters,
-    getFilter: state => state.Filter
+    getFilter: state => state.Filter,
 }
 
 const mutations = {
     updateBlogPosts: (state, value) => state.BlogPosts = value,
     updateFilters: (state, value) => state.Filters = value,
-    updateFilter: (state, value) => state.Filter = value
+    updateFilter: (state, value) => state.Filter = value,
 }
 
 export default new Vuex.Store({

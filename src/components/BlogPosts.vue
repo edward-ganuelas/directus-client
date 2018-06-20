@@ -77,7 +77,9 @@ export default {
       // this.originalPosts = this.posts.slice();
       // sessionStorage.setItem(API.post, JSON.stringify(response.data.data));
       // this.$store.commit('updateBlogPosts', JSON.stringify(response.data.data));
-      this.savedPost = response.data.data
+      this.savedPost = response.data.data;
+      localStorage.setItem("blog-eightray", JSON.stringify(response.data.data));
+      localStorage.setItem("blog-eightray-last-update", Date.now());
     },
     publishedDate: function(published_date) {
       let date = new Date(published_date);
@@ -117,33 +119,36 @@ export default {
       }).reverse();
     },
     savedPost: {
-      get: function(){
-        return this.$store.getters.getBlogPosts
+      get: function() {
+        return this.$store.getters.getBlogPosts;
       },
-      set: function(value){
-        this.$store.commit('updateBlogPosts', value)
+      set: function(value) {
+        this.$store.commit("updateBlogPosts", value);
       }
     },
-    filter(){
+    filter() {
       return this.$store.getters.getFilter;
     },
     filteredPosts() {
-      if(this.filter === ''){
+      if (this.filter === "") {
         return this.savedPost;
       }
-      let filteredPosts = this.savedPost
+      let filteredPosts = this.savedPost;
       // filteredPosts = 'test';
-      filteredPosts = filteredPosts.filter(x=>{
-         let filterCheck = false;
-          x.tags.data.forEach(element => {
-            if (element.tag === this.filter) {
-              filterCheck = true;
-            }
-          });
-          return filterCheck;
-      })
+      filteredPosts = filteredPosts.filter(x => {
+        let filterCheck = false;
+        x.tags.data.forEach(element => {
+          if (element.tag === this.filter) {
+            filterCheck = true;
+          }
+        });
+        return filterCheck;
+      });
 
       return filteredPosts;
+    },
+    lastFetch() {
+      return this.$store.getters.getLastFetch();
     }
   },
   watch: {
@@ -174,10 +179,20 @@ export default {
     // }
 
     // this.getPosts();
-    if(this.savedPost === ''){
+    const posts = localStorage.getItem("blog-eightray");
+    const today = Date.now();
+    const lastFetch = localStorage.getItem("blog-eightray-last-update");
+    const milisecondsToDay = 86400000;
+    const daysSinceLastUpdate = today - lastFetch;
+    // console.log(posts)
+    if (!posts) {
       this.getPosts();
-    }else{
-
+    } else {
+      if (daysSinceLastUpdate > milisecondsToDay) {
+        this.getPosts();
+      } else {
+        this.savedPost = JSON.parse(posts);
+      }
     }
   }
 };
