@@ -17,7 +17,9 @@
     "vue-head": "^2.0.11",
     "vue-router": "^3.0.1",
     "vue2-animate": "^1.0.4",
-    "vuetify": "^0.17.2"
+    "vuetify": "^0.17.2",
+    "vuex": "^3.0.1",
+    "vuex-persistedstate": "^2.5.4"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
