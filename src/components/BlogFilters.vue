@@ -11,6 +11,7 @@
 <script>
 import axios from "axios";
 import { API } from "../constants";
+import { get, sync } from 'vuex-pathify'
 
 export default {
   name: "BlogFilters",
@@ -40,22 +41,8 @@ export default {
     }
   },
   computed: {
-    filters: {
-      get() {
-        return this.$store.getters.getFilters;
-      },
-      set(value) {
-        this.$store.commit("updateFilters", value);
-      }
-    },
-    filter: {
-      get() {
-        return this.$store.getters.getFilter;
-      },
-      set(value) {
-        this.$store.commit("updateFilter", value);
-      }
-    }
+    filters: sync('Filters'),
+    filter: sync('Filter')
   },
 
   beforeMount: function() {
