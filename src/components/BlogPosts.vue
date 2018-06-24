@@ -56,6 +56,7 @@ import axios from "axios";
 import BlogFilters from "./BlogFilters";
 import Author from "./Author";
 import _ from "lodash";
+import { get, sync } from 'vuex-pathify'
 export default {
   name: "blog-posts",
   data() {
@@ -118,17 +119,8 @@ export default {
         return new Date(x.published_date);
       }).reverse();
     },
-    savedPost: {
-      get: function() {
-        return this.$store.getters.getBlogPosts;
-      },
-      set: function(value) {
-        this.$store.commit("updateBlogPosts", value);
-      }
-    },
-    filter() {
-      return this.$store.getters.getFilter;
-    },
+    savedPost: sync('BlogPosts'),
+    filter: get('Filter'),
     filteredPosts() {
       if (this.filter === "") {
         return this.savedPost;
@@ -147,9 +139,6 @@ export default {
 
       return filteredPosts;
     },
-    lastFetch() {
-      return this.$store.getters.getLastFetch();
-    }
   },
   watch: {
     filtereas: function(value) {

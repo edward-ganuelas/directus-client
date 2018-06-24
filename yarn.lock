@@ -3392,7 +3392,7 @@ lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
 
-lodash.clonedeep@^4.3.2:
+lodash.clonedeep@^4.3.2, lodash.clonedeep@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
 
@@ -5885,6 +5885,12 @@ vue@^2.5.2:
 vuetify@^0.17.2:
   version "0.17.7"
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-0.17.7.tgz#068c8210473643d45166ef9c5f6eb0ecf26bb5a5"
+
+vuex-pathify@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vuex-pathify/-/vuex-pathify-1.1.0.tgz#a908d5c9cd85ac42212332182f5ba9f060948fec"
+  dependencies:
+    lodash.clonedeep "^4.5.0"
 
 vuex-persistedstate@^2.5.4:
   version "2.5.4"
