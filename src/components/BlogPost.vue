@@ -58,29 +58,29 @@ export default {
     };
   },
   methods: {
-  getPost: async function() {  
+    getPost: async function() {
       let response = await axios.get(API.post + this.id);
-          this.post = response.data.data;
-          sessionStorage.setItem(API.post + this.id, JSON.stringify(this.post));
-          window.setTimeout(()=>{
-            this.updateMetaData();
-            this.$emit('updateHead');
-          }, 2000);
+      this.post = response.data.data;
+      sessionStorage.setItem(API.post + this.id, JSON.stringify(this.post));
+      window.setTimeout(() => {
+        this.updateMetaData();
+        this.$emit("updateHead");
+      }, 2000);
     },
     publishedDate: function(published_date) {
       let date = new Date(published_date);
       return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
     },
-    updateMetaData: function(){
+    updateMetaData: function() {
       this.title = this.post.title;
       this.keywords = this.getKeyWords();
       this.description = this.post.excerpt;
     },
-    getKeyWords: function(){
+    getKeyWords: function() {
       let keywords = [];
       this.post.tags.data.forEach(x => {
         keywords.push(x.tag);
-      })
+      });
       return keywords.join();
     }
   },
@@ -88,21 +88,26 @@ export default {
     if (sessionStorage.getItem(API.post + this.id) === null) {
       this.getPost();
     } else {
-        this.post = JSON.parse(sessionStorage.getItem(API.post + this.id));
-        this.updateMetaData();
+      this.post = JSON.parse(sessionStorage.getItem(API.post + this.id));
+      this.updateMetaData();
     }
+    this.$ga.page({
+      page: "/post",
+      title: this.post.title,
+      location: window.location.href
+    });
   },
-  head:{
-    title: function(){
+  head: {
+    title: function() {
       return {
         inner: this.title
-      }
+      };
     },
-    meta: function(){
+    meta: function() {
       return [
-        {name: 'description', content: this.description },
-        {name: 'keywords', content: this.description },
-      ]
+        { name: "description", content: this.description },
+        { name: "keywords", content: this.description }
+      ];
     }
   }
 };
@@ -110,7 +115,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.blog-post{
+.blog-post {
   width: 100%;
 }
 .progress-circular {
@@ -119,16 +124,15 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.fab-wrapper{
+.fab-wrapper {
   height: 100px;
 }
-.bottom-nav-wrap{
+.bottom-nav-wrap {
   height: 200px;
-   position: absolute;
-   bottom: 80px;
-   .bottom-nav{
+  position: absolute;
+  bottom: 80px;
+  .bottom-nav {
     bottom: 70px;
   }
 }
-
 </style>
