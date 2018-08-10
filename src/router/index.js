@@ -13,7 +13,7 @@ export default new Router({
             component: BlogPosts
         },
         {
-            path: '/post/:id',
+            path: '/post/:id/:title',
             name: 'Post',
             component: BlogPost,
             props: true

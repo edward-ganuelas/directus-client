@@ -26,7 +26,7 @@
               <blockquote>{{post.excerpt}}</blockquote>
             </v-card-text>
             <v-card-actions>
-              <v-btn flat :to="{name: 'Post', params: {id: post.id}}">Read More</v-btn>
+              <v-btn flat :to="{name: 'Post', params: {id: post.id, title: kebabTitle(post.title)}}">Read More</v-btn>
             </v-card-actions>
           </v-card>
         </v-flex>   
@@ -111,6 +111,9 @@ export default {
     },
     resetPosts: function() {
       this.posts = this.originalPosts.slice();
+    },
+    kebabTitle(title){
+      return _.kebabCase(title);
     }
   },
   computed: {
