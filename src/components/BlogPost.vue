@@ -40,8 +40,10 @@
 
 <script>
 // import axios from "axios";
-import { API, client } from "../constants";
+import { API } from "../constants";
 import Author from "./Author";
+import axios from "axios";
+
 export default {
   name: "BlogPost",
   props: ["id"],
@@ -59,8 +61,7 @@ export default {
   },
   methods: {
     getPost: async function() {
-      // let response = await axios.get(API.post + this.id);
-      let response = await client.getItem('blog', this.id);
+      let response = await axios.get(`${API.post}${this.id}`);
       this.post = response.data;
       localStorage.setItem(API.post + this.id, JSON.stringify(this.post));
       window.setTimeout(() => {
