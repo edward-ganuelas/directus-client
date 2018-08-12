@@ -1,4 +1,4 @@
-import RemoteInstance from "directus-sdk-javascript/remote";
+
 export const API = {
     "url": process.env.APIHOST + '/api/1.1',
     "post": process.env.APIHOST + '/api/1.1/tables/blog/rows/',
@@ -6,6 +6,3 @@ export const API = {
     "tags": process.env.APIHOST + '/api/1.1/tables/tags/rows/'
 }
 
-export const client = new RemoteInstance({
-    url: API.url
-});

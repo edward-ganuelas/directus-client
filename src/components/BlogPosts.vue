@@ -51,11 +51,12 @@
 </template>
 
 <script>
-import { client } from "../constants";
+import { API } from "../constants";
 import BlogFilters from "./BlogFilters";
 import Author from "./Author";
 import _ from "lodash";
 import { get, sync } from "vuex-pathify";
+import axios from 'axios';
 export default {
   name: "blog-posts",
   data() {
@@ -67,10 +68,9 @@ export default {
   },
   methods: {
     getPosts: async function() {
-     
-      const response = await client.getItems("blog");
-      this.savedPost = response.data;
-      localStorage.setItem("blog-eightray", JSON.stringify(response.data));
+      const response = await axios.get(API.post);
+      this.savedPost = response.data.data;
+      localStorage.setItem("blog-eightray", JSON.stringify(response.data.data));
       localStorage.setItem("blog-eightray-last-update", Date.now());
     },
     publishedDate: function(published_date) {

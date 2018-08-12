@@ -12,7 +12,6 @@
   "dependencies": {
     "axios": "^0.17.1",
     "babel-polyfill": "^6.26.0",
-    "directus-sdk-javascript": "^2.12.3",
     "dotenv-webpack": "^1.5.7",
     "lodash": "^4.17.10",
     "vue": "^2.5.2",

@@ -9,8 +9,9 @@
 </template>
 
 <script>
-import { client } from "../constants";
+import { API } from "../constants";
 import { get, sync } from "vuex-pathify";
+import axios from 'axios';
 
 export default {
   name: "BlogFilters",
@@ -22,11 +23,11 @@ export default {
   methods: {
     getFilters: async function() {
 
-      const response = await client.getItems("tags");
-      this.filters = response.data;
+      const response = await axios.get(API.tags);
+      this.filters = response.data.data;
       localStorage.setItem(
         "blog-eightray-filters",
-        JSON.stringify(response.data)
+        JSON.stringify(response.data.data)
       );
     },
     onFilterClick: function(filter) {

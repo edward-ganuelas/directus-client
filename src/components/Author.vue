@@ -3,9 +3,8 @@
 </template>
 
 <script>
-// import axios from "axios";
-import { client } from "../constants";
-import RemoteInstance from "directus-sdk-javascript/remote";
+import axios from "axios";
+import { API } from "../constants";
 export default {
   name: "Author",
   props: ["author"],
@@ -16,9 +15,9 @@ export default {
   },
   methods: {
     getAuthor: async function() {
-      let response = await client.getUsers(this.author);
+      let response = await axios.get(`${API.user}${this.author}`);
       this.name =
-        response.data[0].first_name + " " + response.data[0].last_name;
+        response.data.data.first_name + " " + response.data.data.last_name;
       localStorage.setItem(`eightray_author_${this.author}`, this.name);
     }
   },
