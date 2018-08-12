@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import { API } from "../constants";
+// import axios from "axios";
+import { API, client } from "../constants";
 import Author from "./Author";
 export default {
   name: "BlogPost",
@@ -59,9 +59,10 @@ export default {
   },
   methods: {
     getPost: async function() {
-      let response = await axios.get(API.post + this.id);
-      this.post = response.data.data;
-      sessionStorage.setItem(API.post + this.id, JSON.stringify(this.post));
+      // let response = await axios.get(API.post + this.id);
+      let response = await client.getItem('blog', this.id);
+      this.post = response.data;
+      localStorage.setItem(API.post + this.id, JSON.stringify(this.post));
       window.setTimeout(() => {
         this.updateMetaData();
         this.$emit("updateHead");
@@ -85,10 +86,10 @@ export default {
     }
   },
   beforeMount: function() {
-    if (sessionStorage.getItem(API.post + this.id) === null) {
+    if (localStorage.getItem(API.post + this.id) === null) {
       this.getPost();
     } else {
-      this.post = JSON.parse(sessionStorage.getItem(API.post + this.id));
+      this.post = JSON.parse(localStorage.getItem(API.post + this.id));
       this.updateMetaData();
     }
     this.$ga.page({

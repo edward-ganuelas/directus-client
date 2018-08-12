@@ -51,20 +51,15 @@
 </template>
 
 <script>
-import { API } from "../constants";
-import axios from "axios";
+import { client } from "../constants";
 import BlogFilters from "./BlogFilters";
 import Author from "./Author";
 import _ from "lodash";
-import { get, sync } from 'vuex-pathify'
+import { get, sync } from "vuex-pathify";
 export default {
   name: "blog-posts",
   data() {
-    return {
-      // posts: "",
-      // originalPosts: "",
-      // filter: ""
-    };
+    return {};
   },
   components: {
     Author,
@@ -72,14 +67,10 @@ export default {
   },
   methods: {
     getPosts: async function() {
-      let response = await axios.get(API.post);
-      // console.log(response)
-      // let posts = response.data.data;
-      // this.originalPosts = this.posts.slice();
-      // sessionStorage.setItem(API.post, JSON.stringify(response.data.data));
-      // this.$store.commit('updateBlogPosts', JSON.stringify(response.data.data));
-      this.savedPost = response.data.data;
-      localStorage.setItem("blog-eightray", JSON.stringify(response.data.data));
+     
+      const response = await client.getItems("blog");
+      this.savedPost = response.data;
+      localStorage.setItem("blog-eightray", JSON.stringify(response.data));
       localStorage.setItem("blog-eightray-last-update", Date.now());
     },
     publishedDate: function(published_date) {
@@ -112,7 +103,7 @@ export default {
     resetPosts: function() {
       this.posts = this.originalPosts.slice();
     },
-    kebabTitle(title){
+    kebabTitle(title) {
       return _.kebabCase(title);
     }
   },
@@ -122,8 +113,8 @@ export default {
         return new Date(x.published_date);
       }).reverse();
     },
-    savedPost: sync('BlogPosts'),
-    filter: get('Filter'),
+    savedPost: sync("BlogPosts"),
+    filter: get("Filter"),
     filteredPosts() {
       if (this.filter === "") {
         return this.savedPost;
@@ -141,7 +132,7 @@ export default {
       });
 
       return filteredPosts;
-    },
+    }
   },
   watch: {
     filtereas: function(value) {
@@ -162,21 +153,11 @@ export default {
     }
   },
   beforeMount: function() {
-    // if (sessionStorage.getItem(API.post) === null) {
-    //   this.getPosts();
-    // } else {
-    //   // this.posts = JSON.parse(sessionStorage.getItem(API.post));
-    //   this.originalPosts = this.posts.slice();
-    //   this.savedPost = this.posts.slice();
-    // }
-
-    // this.getPosts();
     const posts = localStorage.getItem("blog-eightray");
     const today = Date.now();
     const lastFetch = localStorage.getItem("blog-eightray-last-update");
     const milisecondsToDay = 86400000;
     const daysSinceLastUpdate = today - lastFetch;
-    // console.log(posts)
     if (!posts) {
       this.getPosts();
     } else {
