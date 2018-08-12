@@ -13,10 +13,13 @@ export default new Router({
             component: BlogPosts
         },
         {
-            path: '/post/:id/:title',
+            path: '/post/:title',
             name: 'Post',
             component: BlogPost,
-            props: true
+            props: (route) =>({
+                id: route.query.id,
+                title: route.params.title
+            })
         },
         {
             path: '../',
