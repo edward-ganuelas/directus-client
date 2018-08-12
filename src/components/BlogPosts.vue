@@ -51,20 +51,15 @@
 </template>
 
 <script>
-import { API } from "../constants";
+import { client } from "../constants";
 import BlogFilters from "./BlogFilters";
 import Author from "./Author";
 import _ from "lodash";
 import { get, sync } from "vuex-pathify";
-import RemoteInstance from "directus-sdk-javascript/remote";
 export default {
   name: "blog-posts",
   data() {
-    return {
-      // posts: "",
-      // originalPosts: "",
-      // filter: ""
-    };
+    return {};
   },
   components: {
     Author,
@@ -72,11 +67,8 @@ export default {
   },
   methods: {
     getPosts: async function() {
- 
-      const client = new RemoteInstance({
-        url: API.url
-      });
-      const response = await client.getItems('blog');
+     
+      const response = await client.getItems("blog");
       this.savedPost = response.data;
       localStorage.setItem("blog-eightray", JSON.stringify(response.data));
       localStorage.setItem("blog-eightray-last-update", Date.now());
@@ -161,7 +153,6 @@ export default {
     }
   },
   beforeMount: function() {
-
     const posts = localStorage.getItem("blog-eightray");
     const today = Date.now();
     const lastFetch = localStorage.getItem("blog-eightray-last-update");

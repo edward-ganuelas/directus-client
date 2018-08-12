@@ -9,8 +9,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import { API } from "../constants";
+import { client } from "../constants";
 import { get, sync } from "vuex-pathify";
 
 export default {
@@ -22,17 +21,15 @@ export default {
   },
   methods: {
     getFilters: async function() {
-      let response = await axios.get(API.tags);
-      // this.data = response.data.data;
-      this.filters = response.data.data;
+
+      const response = await client.getItems("tags");
+      this.filters = response.data;
       localStorage.setItem(
         "blog-eightray-filters",
-        JSON.stringify(response.data.data)
+        JSON.stringify(response.data)
       );
-      // sessionStorage.setItem(API.tags, JSON.stringify(response.data.data));
     },
     onFilterClick: function(filter) {
-      // this.$emit('clicked', filter);
       if (filter === "clear") {
         this.filter = "";
       } else {
@@ -64,11 +61,7 @@ export default {
         this.filters = JSON.parse(filter);
       }
     }
-    // if (sessionStorage.getItem(API.tags) === null) {
-    //   this.getFilters();
-    // }else{
-    //   this.data = JSON.parse(sessionStorage.getItem(API.tags));
-    // }
+
   }
 };
 </script>

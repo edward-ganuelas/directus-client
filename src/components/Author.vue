@@ -3,8 +3,9 @@
 </template>
 
 <script>
-import axios from "axios";
-import { API } from "../constants";
+// import axios from "axios";
+import { client } from "../constants";
+import RemoteInstance from "directus-sdk-javascript/remote";
 export default {
   name: "Author",
   props: ["author"],
@@ -15,16 +16,17 @@ export default {
   },
   methods: {
     getAuthor: async function() {
-      let response = await axios.get(API.user + this.author);
-      this.name = response.data.data.first_name + " " + response.data.data.last_name;
-      sessionStorage.setItem(API.user + this.author, this.name);
+      let response = await client.getUsers(this.author);
+      this.name =
+        response.data[0].first_name + " " + response.data[0].last_name;
+      localStorage.setItem(`eightray_author_${this.author}`, this.name);
     }
   },
   beforeMount: function() {
-    if (sessionStorage.getItem(API.user + this.author) === null) {
+    if (localStorage.getItem(`eightray_author_${this.author}`) === null) {
       this.getAuthor();
-    }else{
-      this.name = sessionStorage.getItem(API.user + this.author);
+    } else {
+      this.name = localStorage.getItem(`eightray_author_${this.author}`);
     }
   }
 };
@@ -32,5 +34,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-
 </style>
