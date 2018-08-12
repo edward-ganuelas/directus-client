@@ -11,7 +11,7 @@
 <script>
 import axios from "axios";
 import { API } from "../constants";
-import { get, sync } from 'vuex-pathify'
+import { get, sync } from "vuex-pathify";
 
 export default {
   name: "BlogFilters",
@@ -38,11 +38,15 @@ export default {
       } else {
         this.filter = filter;
       }
+      this.$ga.event({
+        eventCategory: `Filter ${filter}`,
+        eventAction: "click"
+      });
     }
   },
   computed: {
-    filters: sync('Filters'),
-    filter: sync('Filter')
+    filters: sync("Filters"),
+    filter: sync("Filter")
   },
 
   beforeMount: function() {
