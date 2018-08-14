@@ -62,7 +62,7 @@ export default {
   methods: {
     getPost: async function() {
       let response = await axios.get(`${API.post}${this.id}`);
-      this.post = response.data;
+      this.post = response.data.data;
       localStorage.setItem(API.post + this.id, JSON.stringify(this.post));
       window.setTimeout(() => {
         this.updateMetaData();
