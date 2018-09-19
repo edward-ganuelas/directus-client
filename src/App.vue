@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-12">
           <div class="header">
@@ -9,14 +9,16 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="container">
       <div class="row">
         <transition name="slideLeft" leave-active-class="dissapear">
           <router-view></router-view>
         </transition>
       </div>
       <div class="row">
-        <div class="col-12">
-          <p class="text-xs-center"><a href="https://eightrayedsun.com">EightRayedSun</a></p>
+        <div class="col-12 footer">
+          <p class=""><a href="https://eightrayedsun.com">EightRayedSun</a></p>
         </div>
       </div>
     </div>
@@ -71,5 +73,9 @@ h1, h2, h3, h4, h5, h6{
 .card{
   padding: 25px 0;
 }
-
+.footer{
+  p{
+    text-align: center;
+  }
+}
 </style>

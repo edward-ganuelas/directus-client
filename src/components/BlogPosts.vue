@@ -2,12 +2,12 @@
   <div class="posts">
     <div class="container">
       <div class="row">
-        <div class="col-12 col-lg-7 col-md-12">
+        <div class="col-12">
             <blog-filters />
         </div>
       </div>
     </div>
-    <div class="col-12 col-lg-7">
+    <div class="col-12">
       <transition-group name="fade" leave-active-class="fadeOutRight">
         <div class="col-12" v-for="post in orderedPosts" v-bind:key="post.id">
            <div class="card shadow">
@@ -156,6 +156,7 @@ export default {
 <style lang="scss" scoped>
 .posts {
   width: 100%;
+  text-align: center;
 }
 ul {
   display: flex;

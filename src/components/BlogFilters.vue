@@ -74,10 +74,15 @@ export default {
 .filters {
   padding: 18px;
 }
-ul {
-  list-style-type: none;
-  text-align: left;
-  display: flex;
-  flex-wrap: wrap;
+// ul {
+//   list-style-type: none;
+//   text-align: left;
+//   display: flex;
+//   flex-wrap: wrap;
+// }
+.btn{
+  border-radius: 0;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
 }
 </style>
