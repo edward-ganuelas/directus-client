@@ -1,10 +1,12 @@
 <template>
-  <div class="filters">
-    <h3>Filters</h3>
-    <ul>
-      <li><v-btn @click="onFilterClick('clear')">Clear</v-btn></li>
-      <li v-for="tag in filters" v-bind:id="tag.id" :key="tag.id"><v-btn @click="onFilterClick(tag.tag)" :disabled="tag.tag === filter">{{tag.tag}}</v-btn></li>
-    </ul>
+  <div class="filters container">
+    <div class="row">
+      <div class="col-12">
+        <p>Filters</p>
+      </div>
+      <button type="button" class="btn btn-secondary col" @click="onFilterClick('clear')">Clear</button>
+      <button type="button" class="btn btn-secondary col" v-for="tag in filters" v-bind:id="tag.id" :key="tag.id" @click="onFilterClick(tag.tag)" :disabled="tag.tag === filter">{{tag.tag}}</button>
+    </div>
   </div>
 </template>
 
