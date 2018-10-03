@@ -26,14 +26,12 @@
 </template>
 
 <script>
-import Container from './components/bootstrap/Container'
-import Row from './components/bootstrap/Row'
 export default {
   name: "app",
   data() {
     return {};
   },
-  components: {Container, Row}
+  components: {}
 };
 </script>
 

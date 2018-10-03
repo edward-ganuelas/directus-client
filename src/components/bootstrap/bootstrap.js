@@ -1,7 +1,9 @@
 import Container from './Container';
+import Row from './Row';
 
 export default{
-    components:{
-        Container
+    install: function(Vue){
+        Vue.component(Container.name, Container)
+        Vue.component(Row.name, Row)
     }
 }
