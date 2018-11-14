@@ -1,12 +1,12 @@
 <template>
   <div class="posts">
-    <div class="container">
-      <div class="row">
+    <container>
+      <row>
         <div class="col-12">
             <blog-filters />
         </div>
-      </div>
-    </div>
+      </row>
+    </container>
     <div class="col-12">
       <transition-group name="fade" leave-active-class="fadeOutRight">
         <div class="col-12" v-for="post in orderedPosts" v-bind:key="post.id">
