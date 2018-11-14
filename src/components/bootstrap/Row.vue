@@ -1,4 +1,4 @@
-<template>
+<template functional>
   <div :class="['row', classes]">
     <slot></slot>
   </div>
@@ -9,11 +9,7 @@ export default {
   name: 'Row',
   props: {
     classes: String
-  },
-  data () {
-    return {
-    }
-  },
+  }
 }
 </script>
 

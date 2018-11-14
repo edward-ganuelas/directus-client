@@ -1,5 +1,5 @@
-<template>
-  <div :class="[container, classes]">
+<template functional>
+  <div :class="[{'container-fluid': props.fluid, 'container': !props.fluid}, props.classes]">
     <slot></slot>
   </div>
 </template>
@@ -10,15 +10,6 @@ export default {
   props: {
     fluid: Boolean,
     classes: String
-  },
-  data () {
-    return {
-    }
-  },
-  computed: {
-    container(){
-      return this.fluid ? 'container-fluid': 'container'
-    }
   }
 }
 </script>
