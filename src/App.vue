@@ -1,27 +1,27 @@
 <template>
   <div id="app">
-    <div class="container-fluid">
-      <div class="row">
+    <container :fluid="true">
+      <row>
         <div class="col-12">
           <div class="header">
             <h1><router-link :to="{name: 'Home'}">Blog</router-link></h1>
             <p>By EightRayedSun</p>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
+      </row>
+    </container>
+    <container>
+      <row>
         <transition name="slideLeft" leave-active-class="dissapear">
           <router-view></router-view>
         </transition>
-      </div>
-      <div class="row">
+      </row>
+      <row>
         <div class="col-12 footer">
           <p class=""><a href="https://eightrayedsun.com">EightRayedSun</a></p>
         </div>
-      </div>
-    </div>
+      </row>
+    </container>
   </div>
 </template>
 

@@ -1,13 +1,13 @@
 <template>
-  <div class="filters container">
-    <div class="row">
+  <container classes="filters">
+    <row>
       <div class="col-12">
         <p>Filters</p>
       </div>
       <button type="button" class="btn btn-secondary col" @click="onFilterClick('clear')">Clear</button>
       <button type="button" class="btn btn-secondary col" v-for="tag in filters" v-bind:id="tag.id" :key="tag.id" @click="onFilterClick(tag.tag)" :disabled="tag.tag === filter">{{tag.tag}}</button>
-    </div>
-  </div>
+    </row>
+  </container>
 </template>
 
 <script>

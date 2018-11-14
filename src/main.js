@@ -9,6 +9,8 @@ import store from './vuex/store';
 // require('../node_modules/vuetify/dist/vuetify.min.css');
 require('vue2-animate/dist/vue2-animate.min.css')
 import VueAnalytics from 'vue-analytics'
+import bootstrap from './components/bootstrap/bootstrap';
+
 
 Vue.config.productionTip = false
 
@@ -19,6 +21,9 @@ Vue.use(VueAnalytics, {
   id: 'UA-112624646-1',
   router
 })
+
+Vue.use(bootstrap);
+
 
 /* eslint-disable no-new */
 new Vue({
