@@ -1,12 +1,4 @@
 <template>
-  <div class="posts">
-    <container>
-      <row>
-        <div class="col-12">
-            <blog-filters />
-        </div>
-      </row>
-    </container>
     <div class="col-12">
       <transition-group name="fade" leave-active-class="fadeOutRight">
         <div class="col-12" v-for="post in orderedPosts" v-bind:key="post.id">
@@ -25,27 +17,22 @@
            </div>
         </div>
       </transition-group>
-
     </div>
-    
-  </div>
 </template>
 
 <script>
 import { API } from "../constants";
-import BlogFilters from "./BlogFilters";
 import Author from "./Author";
 import _ from "lodash";
 import { get, sync } from "vuex-pathify";
 import axios from 'axios';
 export default {
-  name: "blog-posts",
+  name: "BlogPosts",
   data() {
     return {};
   },
   components: {
-    Author,
-    BlogFilters
+    Author
   },
   methods: {
     getPosts: async function() {

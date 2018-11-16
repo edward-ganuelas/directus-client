@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import BlogPosts from '../components/BlogPosts';
+import Blog from '../components/pages/Blog';
 import BlogPost from '../components/BlogPost';
 
 Vue.use(Router);
@@ -10,7 +10,7 @@ export default new Router({
         {
             path: '/',
             name: 'Home',
-            component: BlogPosts
+            component: Blog
         },
         {
             path: '/post/:title',
