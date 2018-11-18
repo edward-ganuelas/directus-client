@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
+// @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
 @import url('https://fonts.googleapis.com/css?family=Lora|Open+Sans');
 @import "./node_modules/bootstrap/scss/bootstrap-reboot.scss";
 @import "./node_modules/bootstrap/scss/bootstrap-grid.scss";
@@ -76,6 +76,12 @@ h1, h2, h3, h4, h5, h6{
 .footer{
   p{
     text-align: center;
+  }
+}
+a{
+  color: #0066FF;
+  &:visited{
+    color: #ff9900;
   }
 }
 </style>

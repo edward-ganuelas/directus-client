@@ -6,8 +6,11 @@
             <blog-filters />
         </div>
       </row>
+      <row>
+        <blog-posts />
+      </row>
     </container>
-    <blog-posts />
+    
   </div>
 </template>
 

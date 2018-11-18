@@ -4,8 +4,13 @@
       <div class="col-12">
         <p>Filters</p>
       </div>
-      <button type="button" class="btn btn-secondary col" @click="onFilterClick('clear')">Clear</button>
-      <button type="button" class="btn btn-secondary col" v-for="tag in filters" v-bind:id="tag.id" :key="tag.id" @click="onFilterClick(tag.tag)" :disabled="tag.tag === filter">{{tag.tag}}</button>
+    </row>
+    <row>
+      <div class="col"><button type="button" class="btn btn-secondary" @click="onFilterClick('clear')">Clear</button></div>
+      <div class="col" v-for="tag in filters" v-bind:id="tag.id" :key="tag.id">
+         <button type="button" class="btn btn-secondary"  @click="onFilterClick(tag.tag)" :disabled="tag.tag === filter">{{tag.tag}}</button>
+      </div>
+     
     </row>
   </container>
 </template>
@@ -13,7 +18,7 @@
 <script>
 import { API } from "../constants";
 import { get, sync } from "vuex-pathify";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   name: "BlogFilters",
@@ -24,7 +29,6 @@ export default {
   },
   methods: {
     getFilters: async function() {
-
       const response = await axios.get(API.tags);
       this.filters = response.data.data;
       localStorage.setItem(
@@ -64,7 +68,6 @@ export default {
         this.filters = JSON.parse(filter);
       }
     }
-
   }
 };
 </script>
@@ -73,6 +76,11 @@ export default {
 <style scoped lang="scss">
 .filters {
   padding: 18px;
+  background-color: #0066ff;
+  p {
+    text-align: left;
+    font-weight: bold;
+  }
 }
 // ul {
 //   list-style-type: none;
@@ -80,9 +88,9 @@ export default {
 //   display: flex;
 //   flex-wrap: wrap;
 // }
-.btn{
+.btn {
   border-radius: 0;
-  margin-left: 1rem;
   margin-bottom: 1rem;
+  width: 100%;
 }
 </style>

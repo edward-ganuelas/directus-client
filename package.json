@@ -20,7 +20,6 @@
     "vue-head": "^2.0.11",
     "vue-router": "^3.0.1",
     "vue2-animate": "^1.0.4",
-    "vuetify": "^0.17.2",
     "vuex": "^3.0.1",
     "vuex-pathify": "^1.1.0",
     "vuex-persistedstate": "^2.5.4"
