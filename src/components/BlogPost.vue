@@ -1,40 +1,18 @@
 <template>
   <div class="blog-post">
-    <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="post === ''"></v-progress-circular>
-      <v-container grid-list-md text-xs-center v-if="post !== ''">
-      <v-layout row wrap>
-          <v-flex xs12 md8 offset-md2>
-            <h2>{{post.title}}</h2>
-            <author v-bind:author="post.author" v-if="post.author" />
-            <p v-if="post.published_date">Published on {{publishedDate(post.published_date)}}</p>
-            <div v-html="post.content"></div>
-          </v-flex>
-      </v-layout>
-       <v-card-text class="fab-wrapper">
-        <v-speed-dial
-
-                absolute
-                right
-                direction="top"
-                :hover=false
-                transition="slide-y-reverse-transition"
-              >
-              <v-btn
-                slot="activator"
-                color="blue darken-2"
-                dark
-                fab
-                hover
-
-              >
-              <v-icon>toc</v-icon>
-              <v-icon>close</v-icon>
-            </v-btn>
-              <v-btn dark fab small color="orange" :to="{name: 'Home'}"><v-icon>keyboard_backspace</v-icon></v-btn>
-              <v-btn dark fab small color="red" :to="{name: 'EightRay'}"><v-icon>home</v-icon></v-btn>
-            </v-speed-dial>
-        </v-card-text>
-      </v-container>
+      <container v-if="post !== ''">
+        <row>
+            <div class="col-12">
+              <h2>{{post.title}}</h2>
+              <author v-bind:author="post.author" v-if="post.author" />
+              <p v-if="post.published_date" class="publishedDate">Published on {{publishedDate(post.published_date)}}</p>
+              <div v-html="post.content"></div>
+            </div>
+        </row>
+        <row>
+          <div class="col-6"><router-link to="/">Back</router-link></div>
+        </row>
+      </container>
   </div>
 </template>
 
@@ -119,22 +97,12 @@ export default {
 <style lang="scss" scoped>
 .blog-post {
   width: 100%;
-}
-.progress-circular {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.fab-wrapper {
-  height: 100px;
-}
-.bottom-nav-wrap {
-  height: 200px;
-  position: absolute;
-  bottom: 80px;
-  .bottom-nav {
-    bottom: 70px;
+  h2{
+    text-align: center;
+  }
+  .publishedDate{
+    text-align: center;
   }
 }
+
 </style>

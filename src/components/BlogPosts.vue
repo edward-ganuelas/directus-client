@@ -1,70 +1,38 @@
 <template>
-  <div class="posts">
-    <v-progress-circular indeterminate v-bind:size="100" v-bind:width="7" color="blue" v-if="this.savedPost === ''"></v-progress-circular>
-    <v-container grid-list-md text-xs-center v-if="this.savedPost !== ''">
-      <v-layout row wrap>
-      <v-flex xs-12 sm4 lg2 offset-lg1>
-        <v-card hover>
-          <blog-filters />
-        </v-card>
-      </v-flex>
-      <v-flex xs12 sm8 lg8>
+    <div class="col-12">
       <transition-group name="fade" leave-active-class="fadeOutRight">
-        <v-flex xs12 v-for="post in orderedPosts" v-bind:key="post.id">
-          <v-card hover>
-            <v-card-title primary-title>
-              <v-flex xs12>
-                <h2 class="headline">{{post.title}}</h2>
-                <author v-bind:author="post.author" v-if="post.author" />
-                <p v-if="post.published_date">Published on {{publishedDate(post.published_date)}}</p>
-                <ul v-if="post.tags.data" class="tags">
-                  <li v-for="tag in post.tags.data" :key="tag.id"><v-chip>{{tag.tag}}</v-chip></li>
+        <div class="col-12" v-for="post in orderedPosts" v-bind:key="post.id">
+           <div class="card shadow">
+             <div class="card-body">
+             <h2 class="headline card-title">{{post.title}}</h2>
+             <author v-bind:author="post.author" v-if="post.author" />
+               <p v-if="post.published_date">Published on {{publishedDate(post.published_date)}}</p>
+                <ul v-if="post.tags.data.length > 0" class="tags">
+                  <li>Tags:</li>
+                  <li v-for="tag in post['tags'].data" :key="tag.id">{{tag.tag}}</li>
                 </ul>
-              </v-flex>
-            </v-card-title>
-            <v-card-text>
-              <blockquote>{{post.excerpt}}</blockquote>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn flat :to="{name: 'Post', params: {title: kebabTitle(post.title)}, query: {id: post.id}}">Read More</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>   
-      </transition-group>   
-      </v-flex>
-      </v-layout>
-
-        <v-card-text class="fab-wrapper">
-            <v-btn
-            absolute
-            dark
-            fab
-            right
-            color="red"
-            :to="{name: 'EightRay'}" >
-        <v-icon>home</v-icon>
-          </v-btn>
-        </v-card-text>
-         
-    </v-container>
-  </div>
+                <blockquote class="card-text">{{post.excerpt}}</blockquote>
+                <router-link :to="{name: 'Post', params: {title: kebabTitle(post.title)}, query: {id: post.id}}">Read More</router-link>
+                </div>
+           </div>
+        </div>
+      </transition-group>
+    </div>
 </template>
 
 <script>
 import { API } from "../constants";
-import BlogFilters from "./BlogFilters";
 import Author from "./Author";
 import _ from "lodash";
 import { get, sync } from "vuex-pathify";
 import axios from 'axios';
 export default {
-  name: "blog-posts",
+  name: "BlogPosts",
   data() {
     return {};
   },
   components: {
-    Author,
-    BlogFilters
+    Author
   },
   methods: {
     getPosts: async function() {
@@ -175,6 +143,7 @@ export default {
 <style lang="scss" scoped>
 .posts {
   width: 100%;
+  text-align: center;
 }
 ul {
   display: flex;
@@ -188,6 +157,10 @@ ul {
       margin-left: 18px;
     }
   }
+  &.tags{
+    width: 50%;
+    margin: 0 auto 1rem auto;
+  }
 }
 .card__actions {
   .btn {
@@ -196,11 +169,5 @@ ul {
 }
 .card {
   margin-bottom: 18px;
-}
-.progress-circular {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 </style>

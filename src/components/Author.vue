@@ -15,22 +15,26 @@ export default {
   },
   methods: {
     getAuthor: async function() {
-      let response = await axios.get(`${API.user}${this.author}`);
-      this.name =
-        response.data.data.first_name + " " + response.data.data.last_name;
-      localStorage.setItem(`eightray_author_${this.author}`, this.name);
+      if (localStorage.getItem(`eightray_author_${this.author}`) === null) {
+        let response = await axios.get(`${API.user}${this.author}`);
+        this.name = `${response.data.data.first_name} ${
+          response.data.data.last_name
+        }`;
+        localStorage.setItem(`eightray_author_${this.author}`, this.name);
+      } else {
+        this.name = localStorage.getItem(`eightray_author_${this.author}`);
+      }
     }
   },
   beforeMount: function() {
-    if (localStorage.getItem(`eightray_author_${this.author}`) === null) {
-      this.getAuthor();
-    } else {
-      this.name = localStorage.getItem(`eightray_author_${this.author}`);
-    }
+    this.getAuthor();
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+p {
+  text-align: center;
+}
 </style>
