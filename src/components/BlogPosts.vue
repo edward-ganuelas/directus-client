@@ -7,7 +7,7 @@
              <h2 class="headline card-title">{{post.title}}</h2>
              <author v-bind:author="post.author" v-if="post.author" />
                <p v-if="post.published_date">Published on {{publishedDate(post.published_date)}}</p>
-               <ul v-if="post.tags.data.length > 0" class="tags">
+                <ul v-if="post.tags.data.length > 0" class="tags">
                   <li>Tags:</li>
                   <li v-for="tag in post['tags'].data" :key="tag.id">{{tag.tag}}</li>
                 </ul>
@@ -157,6 +157,10 @@ ul {
       margin-left: 18px;
     }
   }
+  &.tags{
+    width: 50%;
+    margin: 0 auto 1rem auto;
+  }
 }
 .card__actions {
   .btn {
@@ -165,11 +169,5 @@ ul {
 }
 .card {
   margin-bottom: 18px;
-}
-.progress-circular {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 </style>
