@@ -28,9 +28,6 @@ import { get, sync } from "vuex-pathify";
 import axios from 'axios';
 export default {
   name: "BlogPosts",
-  data() {
-    return {};
-  },
   components: {
     Author
   },
@@ -57,32 +54,26 @@ export default {
         "November",
         "December"
       ];
-      return (
-        date.getDate() +
-        "/" +
-        months[date.getMonth()] +
-        "/" +
-        date.getFullYear()
-      );
+      return `${date.getDate()}/${months[date.getMonth()]}/${date.getFullYear()}`;
     },
-    filterClicked: function(data) {
-      this.filter = data;
-    },
-    resetPosts: function() {
-      this.posts = this.originalPosts.slice();
-    },
+    // filterClicked: function(data) {
+    //   this.filter = data;
+    // },
+    // resetPosts: function() {
+    //   this.posts = this.originalPosts.slice();
+    // },
     kebabTitle(title) {
       return _.kebabCase(title);
     }
   },
   computed: {
+    savedPost: sync("BlogPosts"),
+    filter: get("Filter"),
     orderedPosts: function() {
       return _.sortBy(this.filteredPosts, x => {
         return new Date(x.published_date);
       }).reverse();
     },
-    savedPost: sync("BlogPosts"),
-    filter: get("Filter"),
     filteredPosts() {
       if (this.filter === "") {
         return this.savedPost;
@@ -102,24 +93,24 @@ export default {
       return filteredPosts;
     }
   },
-  watch: {
-    filtereas: function(value) {
-      this.resetPosts();
-      let filteredPosts = this.savedPost;
-      if (value !== "clear") {
-        filteredPosts = filteredPosts.filter(x => {
-          let filterCheck = false;
-          x.tags.data.forEach(element => {
-            if (element.tag === value) {
-              filterCheck = true;
-            }
-          });
-          return filterCheck;
-        });
-      }
-      this.posts = filteredPosts;
-    }
-  },
+  // watch: {
+  //   filtereas: function(value) {
+  //     this.resetPosts();
+  //     let filteredPosts = this.savedPost;
+  //     if (value !== "clear") {
+  //       filteredPosts = filteredPosts.filter(x => {
+  //         let filterCheck = false;
+  //         x.tags.data.forEach(element => {
+  //           if (element.tag === value) {
+  //             filterCheck = true;
+  //           }
+  //         });
+  //         return filterCheck;
+  //       });
+  //     }
+  //     this.posts = filteredPosts;
+  //   }
+  // },
   beforeMount: function() {
     const posts = localStorage.getItem("blog-eightray");
     const today = Date.now();
