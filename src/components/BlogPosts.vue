@@ -38,108 +38,108 @@ import _ from "lodash";
 import { get, sync } from "vuex-pathify";
 import axios from "axios";
 export default {
-  name: "BlogPosts",
-  components: {
-    Author
-  },
-  methods: {
-    getPosts: async function() {
-      const response = await axios.get(API.post);
-      this.savedPost = response.data.data;
-      localStorage.setItem("blog-eightray", JSON.stringify(response.data.data));
-      localStorage.setItem("blog-eightray-last-update", Date.now());
+    name: "BlogPosts",
+    components: {
+        Author
     },
-    publishedDate: function(published_date) {
-      let date = new Date(published_date);
-      const months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ];
-      return `${date.getDate()}/${
+    methods: {
+        getPosts: async function() {
+            const response = await axios.get(API.post);
+            this.savedPost = response.data.data;
+            localStorage.setItem("blog-eightray", JSON.stringify(response.data.data));
+            localStorage.setItem("blog-eightray-last-update", Date.now());
+        },
+        publishedDate: function(published_date) {
+            let date = new Date(published_date);
+            const months = [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December"
+            ];
+            return `${date.getDate()}/${
                 months[date.getMonth()]
             }/${date.getFullYear()}`;
+        },
+        // filterClicked: function(data) {
+        //   this.filter = data;
+        // },
+        // resetPosts: function() {
+        //   this.posts = this.originalPosts.slice();
+        // },
+        kebabTitle(title) {
+            return _.kebabCase(title);
+        }
     },
-    // filterClicked: function(data) {
-    //   this.filter = data;
-    // },
-    // resetPosts: function() {
-    //   this.posts = this.originalPosts.slice();
-    // },
-    kebabTitle(title) {
-      return _.kebabCase(title);
-    }
-  },
-  computed: {
-    savedPost: sync("BlogPosts"),
-    filter: get("Filter"),
-    orderedPosts: function() {
-      return _.sortBy(this.filteredPosts, x => {
-        return new Date(x.published_date);
-      }).reverse();
-    },
-    filteredPosts() {
-      if (this.filter === "") {
-        return this.savedPost;
-      }
-      let filteredPosts = this.savedPost;
-      // filteredPosts = 'test';
-      filteredPosts = filteredPosts.filter(x => {
-        let filterCheck = false;
-        x.tags.data.forEach(element => {
-          if (element.tag === this.filter) {
-            filterCheck = true;
-          }
-        });
-        return filterCheck;
-      });
+    computed: {
+        savedPost: sync("BlogPosts"),
+        filter: get("Filter"),
+        orderedPosts: function() {
+            return _.sortBy(this.filteredPosts, x => {
+                return new Date(x.published_date);
+            }).reverse();
+        },
+        filteredPosts() {
+            if (this.filter === "") {
+                return this.savedPost;
+            }
+            let filteredPosts = this.savedPost;
+            // filteredPosts = 'test';
+            filteredPosts = filteredPosts.filter(x => {
+                let filterCheck = false;
+                x.tags.data.forEach(element => {
+                    if (element.tag === this.filter) {
+                        filterCheck = true;
+                    }
+                });
+                return filterCheck;
+            });
 
-      return filteredPosts;
+            return filteredPosts;
+        }
+    },
+    // watch: {
+    //   filtereas: function(value) {
+    //     this.resetPosts();
+    //     let filteredPosts = this.savedPost;
+    //     if (value !== "clear") {
+    //       filteredPosts = filteredPosts.filter(x => {
+    //         let filterCheck = false;
+    //         x.tags.data.forEach(element => {
+    //           if (element.tag === value) {
+    //             filterCheck = true;
+    //           }
+    //         });
+    //         return filterCheck;
+    //       });
+    //     }
+    //     this.posts = filteredPosts;
+    //   }
+    // },
+    beforeMount: function() {
+        const posts = localStorage.getItem("blog-eightray");
+        const today = Date.now();
+        const lastFetch = localStorage.getItem("blog-eightray-last-update");
+        const milisecondsToDay = 86400000;
+        const daysSinceLastUpdate = today - lastFetch;
+        if (!posts) {
+            this.getPosts();
+        } else {
+            if (daysSinceLastUpdate > milisecondsToDay) {
+                this.getPosts();
+            } else {
+                this.savedPost = JSON.parse(posts);
+            }
+        }
     }
-  },
-  // watch: {
-  //   filtereas: function(value) {
-  //     this.resetPosts();
-  //     let filteredPosts = this.savedPost;
-  //     if (value !== "clear") {
-  //       filteredPosts = filteredPosts.filter(x => {
-  //         let filterCheck = false;
-  //         x.tags.data.forEach(element => {
-  //           if (element.tag === value) {
-  //             filterCheck = true;
-  //           }
-  //         });
-  //         return filterCheck;
-  //       });
-  //     }
-  //     this.posts = filteredPosts;
-  //   }
-  // },
-  beforeMount: function() {
-    const posts = localStorage.getItem("blog-eightray");
-    const today = Date.now();
-    const lastFetch = localStorage.getItem("blog-eightray-last-update");
-    const milisecondsToDay = 86400000;
-    const daysSinceLastUpdate = today - lastFetch;
-    if (!posts) {
-      this.getPosts();
-    } else {
-      if (daysSinceLastUpdate > milisecondsToDay) {
-        this.getPosts();
-      } else {
-        this.savedPost = JSON.parse(posts);
-      }
-    }
-  }
 };
 </script>
 

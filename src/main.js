@@ -14,15 +14,15 @@ Vue.config.productionTip = false;
 Vue.use(VueHead);
 
 Vue.use(VueAnalytics, {
-  id: "UA-112624646-1",
-  router
+    id: "UA-112624646-1",
+    router
 });
 
 Vue.use(bootstrap);
 
 /* eslint-disable no-new */
 new Vue({
-  store,
-  router,
-  render: h => h(App)
+    store,
+    router,
+    render: h => h(App)
 }).$mount("#app");

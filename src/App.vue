@@ -27,11 +27,11 @@
 
 <script>
 export default {
-  name: "app",
-  data() {
-    return {};
-  },
-  components: {}
+    name: "app",
+    data() {
+        return {};
+    },
+    components: {}
 };
 </script>
 

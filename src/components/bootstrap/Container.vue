@@ -1,21 +1,16 @@
 <template functional>
-  <div
-    :class="[
-      { 'container-fluid': props.fluid, container: !props.fluid },
-      props.classes
-    ]"
-  >
+    <div :class="[{ 'container-fluid': props.fluid, container: !props.fluid }, props.classes]">
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Container",
-  props: {
-    fluid: Boolean,
-    classes: String
-  }
+    name: "Container",
+    props: {
+        fluid: Boolean,
+        classes: String
+    }
 };
 </script>
 

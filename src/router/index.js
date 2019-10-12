@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Blog from "../components/pages/Blog";
-import BlogPost from "../components/BlogPost";
+import Blog from "@/components/views/Blog";
+import BlogPost from "@/components/BlogPost";
 
 Vue.use(Router);
 
@@ -20,13 +20,6 @@ export default new Router({
                 id: route.query.id,
                 title: route.params.title
             })
-        },
-        {
-            path: "../",
-            name: "EightRay",
-            beforeEnter: () => {
-                window.location.href = "https://eightrayedsun.com";
-            }
         }
     ]
 });

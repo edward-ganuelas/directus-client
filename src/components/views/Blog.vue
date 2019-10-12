@@ -14,14 +14,14 @@
 </template>
 
 <script>
-import BlogFilters from "../BlogFilters";
-import BlogPosts from "../BlogPosts";
+import BlogFilters from "@/components/BlogFilters";
+import BlogPosts from "@/components/BlogPosts";
 export default {
-  name: "blog",
-  components: {
-    "blog-filters": BlogFilters,
-    "blog-posts": BlogPosts
-  }
+    name: "blog",
+    components: {
+        "blog-filters": BlogFilters,
+        "blog-posts": BlogPosts
+    }
 };
 </script>
 
