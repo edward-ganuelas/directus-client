@@ -1,37 +1,33 @@
 <template>
-  <div id="app">
-    <container :fluid="true">
-      <row>
-        <div class="col-12">
-          <div class="header">
-            <h1><router-link :to="{ name: 'Home' }">Blog</router-link></h1>
-            <p>By EightRayedSun</p>
-          </div>
-        </div>
-      </row>
-    </container>
-    <container>
-      <row>
-        <transition name="slideLeft" leave-active-class="dissapear">
-          <router-view></router-view>
-        </transition>
-      </row>
-      <row>
-        <div class="col-12 footer">
-          <p class=""><a href="https://eightrayedsun.com">EightRayedSun</a></p>
-        </div>
-      </row>
-    </container>
-  </div>
+    <div id="app">
+        <container :fluid="true">
+            <row>
+                <div class="col-12">
+                <div class="header">
+                    <h1><router-link :to="{ name: 'Home' }">Blog</router-link></h1>
+                    <p>By EightRayedSun</p>
+                </div>
+                </div>
+            </row>
+        </container>
+        <container>
+            <row>
+                <transition name="slideLeft" leave-active-class="dissapear">
+                <router-view></router-view>
+                </transition>
+            </row>
+            <row>
+                <div class="col-12 footer">
+                <p class=""><a href="https://eightrayedsun.com">EightRayedSun</a></p>
+                </div>
+            </row>
+        </container>
+    </div>
 </template>
 
 <script>
 export default {
-    name: "app",
-    data() {
-        return {};
-    },
-    components: {}
+    name: "app"
 };
 </script>
 

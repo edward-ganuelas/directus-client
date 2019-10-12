@@ -1,39 +1,39 @@
 <template>
-  <div class="col-12">
-    <transition-group name="fade" leave-active-class="fadeOutRight">
-      <div class="col-12" v-for="post in orderedPosts" v-bind:key="post.id">
-        <div class="card shadow">
-          <div class="card-body">
-            <h2 class="headline card-title">{{ post.title }}</h2>
-            <author v-bind:author="post.author" v-if="post.author" />
-            <p v-if="post.published_date">
-              Published on {{ publishedDate(post.published_date) }}
-            </p>
-            <ul v-if="post.tags.data.length > 0" class="tags">
-              <li>Tags:</li>
-              <li v-for="tag in post['tags'].data" :key="tag.id">
-                {{ tag.tag }}
-              </li>
-            </ul>
-            <blockquote class="card-text">{{ post.excerpt }}</blockquote>
-            <router-link
-              :to="{
-                name: 'Post',
-                params: { title: kebabTitle(post.title) },
-                query: { id: post.id }
-              }"
-              >Read More</router-link
-            >
-          </div>
-        </div>
-      </div>
-    </transition-group>
-  </div>
+    <div class="col-12">
+        <transition-group name="fade" leave-active-class="fadeOutRight">
+            <div class="col-12" v-for="post in orderedPosts" v-bind:key="post.id">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h2 class="headline card-title">{{ post.title }}</h2>
+                        <author v-bind:author="post.author" v-if="post.author" />
+                        <p v-if="post.published_date">
+                            Published on {{ publishedDate(post.published_date) }}
+                        </p>
+                        <ul v-if="post.tags.data.length > 0" class="tags">
+                            <li>Tags:</li>
+                            <li v-for="tag in post['tags'].data" :key="tag.id">
+                                {{ tag.tag }}
+                            </li>
+                        </ul>
+                        <blockquote class="card-text">{{ post.excerpt }}</blockquote>
+                        <router-link
+                            :to="{
+                                name: 'Post',
+                                params: { title: kebabTitle(post.title) },
+                                query: { id: post.id }
+                            }">
+                            Read More
+                        </router-link>
+                    </div>
+                </div>
+            </div>
+        </transition-group>
+    </div>
 </template>
 
 <script>
-import { API } from "../constants";
-import Author from "./Author";
+import { API } from "@/constants";
+import Author from "@/components/Author";
 import _ from "lodash";
 import { get, sync } from "vuex-pathify";
 import axios from "axios";
@@ -43,13 +43,13 @@ export default {
         Author
     },
     methods: {
-        getPosts: async function() {
+        async getPosts() {
             const response = await axios.get(API.post);
             this.savedPost = response.data.data;
             localStorage.setItem("blog-eightray", JSON.stringify(response.data.data));
             localStorage.setItem("blog-eightray-last-update", Date.now());
         },
-        publishedDate: function(published_date) {
+        publishedDate(published_date) {
             let date = new Date(published_date);
             const months = [
                 "January",
@@ -65,16 +65,8 @@ export default {
                 "November",
                 "December"
             ];
-            return `${date.getDate()}/${
-                months[date.getMonth()]
-            }/${date.getFullYear()}`;
+            return `${date.getDate()}/${months[date.getMonth()]}/${date.getFullYear()}`;
         },
-        // filterClicked: function(data) {
-        //   this.filter = data;
-        // },
-        // resetPosts: function() {
-        //   this.posts = this.originalPosts.slice();
-        // },
         kebabTitle(title) {
             return _.kebabCase(title);
         }
@@ -82,7 +74,7 @@ export default {
     computed: {
         savedPost: sync("BlogPosts"),
         filter: get("Filter"),
-        orderedPosts: function() {
+        orderedPosts() {
             return _.sortBy(this.filteredPosts, x => {
                 return new Date(x.published_date);
             }).reverse();
@@ -106,25 +98,7 @@ export default {
             return filteredPosts;
         }
     },
-    // watch: {
-    //   filtereas: function(value) {
-    //     this.resetPosts();
-    //     let filteredPosts = this.savedPost;
-    //     if (value !== "clear") {
-    //       filteredPosts = filteredPosts.filter(x => {
-    //         let filterCheck = false;
-    //         x.tags.data.forEach(element => {
-    //           if (element.tag === value) {
-    //             filterCheck = true;
-    //           }
-    //         });
-    //         return filterCheck;
-    //       });
-    //     }
-    //     this.posts = filteredPosts;
-    //   }
-    // },
-    beforeMount: function() {
+    beforeMount() {
         const posts = localStorage.getItem("blog-eightray");
         const today = Date.now();
         const lastFetch = localStorage.getItem("blog-eightray-last-update");
