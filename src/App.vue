@@ -4,7 +4,7 @@
       <row>
         <div class="col-12">
           <div class="header">
-            <h1><router-link :to="{name: 'Home'}">Blog</router-link></h1>
+            <h1><router-link :to="{ name: 'Home' }">Blog</router-link></h1>
             <p>By EightRayedSun</p>
           </div>
         </div>
@@ -37,50 +37,57 @@ export default {
 
 <style lang="scss">
 // @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons');
-@import url('https://fonts.googleapis.com/css?family=Lora|Open+Sans');
+@import url("https://fonts.googleapis.com/css?family=Lora|Open+Sans");
 @import "./node_modules/bootstrap/scss/bootstrap-reboot.scss";
 @import "./node_modules/bootstrap/scss/bootstrap-grid.scss";
 @import "./node_modules/bootstrap/scss/_buttons.scss";
 @import "./node_modules/bootstrap/scss/_card.scss";
-:root:root:root html, :root:root:root body, :root:root:root body .application{
-  font-family: 'Open Sans', sans-serif;
+:root:root:root html,
+:root:root:root body,
+:root:root:root body .application {
+  font-family: "Open Sans", sans-serif;
 }
-h1, h2, h3, h4, h5, h6{
-  font-family: 'Lora', serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Lora", serif;
 }
-:root:root:root h1{
-  a{
+:root:root:root h1 {
+  a {
     color: #000;
     text-decoration: none;
   }
 }
-.header{
+.header {
   padding: 16px;
   text-align: center;
-  @media(min-width: 768px){
+  @media (min-width: 768px) {
     text-align: left;
   }
 }
-.fab-wrapper{
+.fab-wrapper {
   position: relative;
-  @media(min-width: 768px){
-      height: 100px; 
+  @media (min-width: 768px) {
+    height: 100px;
   }
 }
-.dissapear{
+.dissapear {
   display: none;
 }
-.card{
+.card {
   padding: 25px 0;
 }
-.footer{
-  p{
+.footer {
+  p {
     text-align: center;
   }
 }
-a{
-  color: #0066FF;
-  &:visited{
+a {
+  color: #0066ff;
+  &:visited {
     color: #ff9900;
   }
 }

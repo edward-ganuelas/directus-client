@@ -3,25 +3,24 @@
     <container>
       <row>
         <div class="col-12">
-            <blog-filters />
+          <blog-filters />
         </div>
       </row>
       <row>
         <blog-posts />
       </row>
     </container>
-    
   </div>
 </template>
 
 <script>
 import BlogFilters from "../BlogFilters";
-import BlogPosts from "../BlogPosts"
+import BlogPosts from "../BlogPosts";
 export default {
   name: "blog",
   components: {
-    'blog-filters': BlogFilters,
-    'blog-posts': BlogPosts
+    "blog-filters": BlogFilters,
+    "blog-posts": BlogPosts
   }
 };
 </script>

@@ -1,23 +1,34 @@
 <template>
-    <div class="col-12">
-      <transition-group name="fade" leave-active-class="fadeOutRight">
-        <div class="col-12" v-for="post in orderedPosts" v-bind:key="post.id">
-           <div class="card shadow">
-             <div class="card-body">
-             <h2 class="headline card-title">{{post.title}}</h2>
-             <author v-bind:author="post.author" v-if="post.author" />
-               <p v-if="post.published_date">Published on {{publishedDate(post.published_date)}}</p>
-                <ul v-if="post.tags.data.length > 0" class="tags">
-                  <li>Tags:</li>
-                  <li v-for="tag in post['tags'].data" :key="tag.id">{{tag.tag}}</li>
-                </ul>
-                <blockquote class="card-text">{{post.excerpt}}</blockquote>
-                <router-link :to="{name: 'Post', params: {title: kebabTitle(post.title)}, query: {id: post.id}}">Read More</router-link>
-                </div>
-           </div>
+  <div class="col-12">
+    <transition-group name="fade" leave-active-class="fadeOutRight">
+      <div class="col-12" v-for="post in orderedPosts" v-bind:key="post.id">
+        <div class="card shadow">
+          <div class="card-body">
+            <h2 class="headline card-title">{{ post.title }}</h2>
+            <author v-bind:author="post.author" v-if="post.author" />
+            <p v-if="post.published_date">
+              Published on {{ publishedDate(post.published_date) }}
+            </p>
+            <ul v-if="post.tags.data.length > 0" class="tags">
+              <li>Tags:</li>
+              <li v-for="tag in post['tags'].data" :key="tag.id">
+                {{ tag.tag }}
+              </li>
+            </ul>
+            <blockquote class="card-text">{{ post.excerpt }}</blockquote>
+            <router-link
+              :to="{
+                name: 'Post',
+                params: { title: kebabTitle(post.title) },
+                query: { id: post.id }
+              }"
+              >Read More</router-link
+            >
+          </div>
         </div>
-      </transition-group>
-    </div>
+      </div>
+    </transition-group>
+  </div>
 </template>
 
 <script>
@@ -25,7 +36,7 @@ import { API } from "../constants";
 import Author from "./Author";
 import _ from "lodash";
 import { get, sync } from "vuex-pathify";
-import axios from 'axios';
+import axios from "axios";
 export default {
   name: "BlogPosts",
   components: {
@@ -54,7 +65,9 @@ export default {
         "November",
         "December"
       ];
-      return `${date.getDate()}/${months[date.getMonth()]}/${date.getFullYear()}`;
+      return `${date.getDate()}/${
+                months[date.getMonth()]
+            }/${date.getFullYear()}`;
     },
     // filterClicked: function(data) {
     //   this.filter = data;
@@ -148,7 +161,7 @@ ul {
       margin-left: 18px;
     }
   }
-  &.tags{
+  &.tags {
     width: 50%;
     margin: 0 auto 1rem auto;
   }

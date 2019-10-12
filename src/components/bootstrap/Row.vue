@@ -6,13 +6,12 @@
 
 <script>
 export default {
-  name: 'Row',
+  name: "Row",
   props: {
     classes: String
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

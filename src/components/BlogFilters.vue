@@ -6,11 +6,25 @@
       </div>
     </row>
     <row>
-      <div class="col"><button type="button" class="btn btn-secondary" @click="onFilterClick('clear')">Clear</button></div>
-      <div class="col" v-for="tag in filters" v-bind:id="tag.id" :key="tag.id">
-         <button type="button" class="btn btn-secondary"  @click="onFilterClick(tag.tag)" :disabled="tag.tag === filter">{{tag.tag}}</button>
+      <div class="col">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          @click="onFilterClick('clear')"
+        >
+          Clear
+        </button>
       </div>
-     
+      <div class="col" v-for="tag in filters" v-bind:id="tag.id" :key="tag.id">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          @click="onFilterClick(tag.tag)"
+          :disabled="tag.tag === filter"
+        >
+          {{ tag.tag }}
+        </button>
+      </div>
     </row>
   </container>
 </template>

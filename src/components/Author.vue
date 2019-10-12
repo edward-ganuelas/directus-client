@@ -1,5 +1,5 @@
 <template>
-    <p class="author">{{name}}</p>
+  <p class="author">{{ name }}</p>
 </template>
 
 <script>
@@ -17,9 +17,7 @@ export default {
     getAuthor: async function() {
       if (localStorage.getItem(`eightray_author_${this.author}`) === null) {
         let response = await axios.get(`${API.user}${this.author}`);
-        this.name = `${response.data.data.first_name} ${
-          response.data.data.last_name
-        }`;
+        this.name = `${response.data.data.first_name} ${response.data.data.last_name}`;
         localStorage.setItem(`eightray_author_${this.author}`, this.name);
       } else {
         this.name = localStorage.getItem(`eightray_author_${this.author}`);

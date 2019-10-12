@@ -1,18 +1,20 @@
 <template>
   <div class="blog-post">
-      <container v-if="post !== ''">
-        <row>
-            <div class="col-12">
-              <h2>{{post.title}}</h2>
-              <author v-bind:author="post.author" v-if="post.author" />
-              <p v-if="post.published_date" class="publishedDate">Published on {{publishedDate(post.published_date)}}</p>
-              <div v-html="post.content"></div>
-            </div>
-        </row>
-        <row>
-          <div class="col-6"><router-link to="/">Back</router-link></div>
-        </row>
-      </container>
+    <container v-if="post !== ''">
+      <row>
+        <div class="col-12">
+          <h2>{{ post.title }}</h2>
+          <author v-bind:author="post.author" v-if="post.author" />
+          <p v-if="post.published_date" class="publishedDate">
+            Published on {{ publishedDate(post.published_date) }}
+          </p>
+          <div v-html="post.content"></div>
+        </div>
+      </row>
+      <row>
+        <div class="col-6"><router-link to="/">Back</router-link></div>
+      </row>
+    </container>
   </div>
 </template>
 
@@ -97,12 +99,11 @@ export default {
 <style lang="scss" scoped>
 .blog-post {
   width: 100%;
-  h2{
+  h2 {
     text-align: center;
   }
-  .publishedDate{
+  .publishedDate {
     text-align: center;
   }
 }
-
 </style>
