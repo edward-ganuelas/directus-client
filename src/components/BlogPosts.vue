@@ -45,19 +45,32 @@ export default {
     },
     methods: {
         async getPosts() {
+            if (_.isObject(this.savedPost)) {
+                return;
+            }
             const response = await client.getItems('blog');
             this.savedPost = response.data;
         },
         async getBlogTags() {
+            if (_.isObject(this.savedBlogTags)) {
+                return;
+            }
             const response = await client.getItems('blog_tags');
             this.savedBlogTags = response.data;
         },
         async getTags() {
+            if (_.isObject(this.savedTags)) {
+                return;
+            }
             const response = await client.getItems('tags');
             this.savedTags = response.data;
         },
         getPostTags(postId) {
+            if (!this.savedBlogTags) {
+                return [];
+            }
             const blogTags = _.cloneDeep(this.savedBlogTags);
+            
             return blogTags.filter(blogTag => blogTag.blog_id === postId);
         },
         convertTagIdToTag(tagId) {
@@ -85,25 +98,17 @@ export default {
             if (this.filter === "") {
                 return this.savedPost;
             }
-            let filteredPosts = this.savedPost;
-            // filteredPosts = 'test';
-            filteredPosts = filteredPosts.filter(x => {
-                let filterCheck = false;
-                x.tags.data.forEach(element => {
-                    if (element.tag === this.filter) {
-                        filterCheck = true;
-                    }
-                });
-                return filterCheck;
-            });
-
-            return filteredPosts;
+            const savedBlogTags = _.cloneDeep(this.savedBlogTags);
+            const filteredBlogTags = savedBlogTags.filter(blogTag => blogTag.tags_id === this.filter)
+                .map(blogTag => blogTag.blog_id);
+            return _.cloneDeep(this.savedPost).filter(post => _.includes(filteredBlogTags, post.id));
+            
         }
     },
     async beforeMount() {
-        this.getPosts();
-        this.getBlogTags();
-        this.getTags();
+        await this.getPosts();
+        await this.getBlogTags();
+        await this.getTags();
     }
 };
 </script>
