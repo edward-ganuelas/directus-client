@@ -28,20 +28,12 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import { sync } from 'vuex-pathify';
-import client from '@/directus';
 
 export default {
     name: 'BlogFilters',
+    props: ['savedTags'],
     methods: {
-        async getTags() {
-            if (_.isObject(this.savedTags)) {
-                return;
-            }
-            const response = await client.getItems('tags');
-            this.savedTags = response.data;
-        },
         onFilterClick(filter, tagId) {
             if (filter === "clear") {
                 this.filter = "";
@@ -55,12 +47,7 @@ export default {
         }
     },
     computed: {
-        savedTags: sync("Tags"),
         filter: sync("Filter")
-    },
-
-    beforeMount() {
-        this.getTags();
     }
 };
 </script>

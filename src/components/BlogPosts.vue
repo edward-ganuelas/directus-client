@@ -5,7 +5,7 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h2 class="headline card-title">{{ post.title }}</h2>
-                        <author v-bind:author="post.author" v-if="post.author" />
+                        <p class="author">Edward Ganuelas</p>
                         <p v-if="post.publish_date">
                             Published on {{ publishedDate(post.publish_date) }}
                         </p>
@@ -32,42 +32,17 @@
 </template>
 
 <script>
-import Author from "@/components/Author";
 import _ from "lodash";
 import moment from 'moment';
-import { get, sync } from "vuex-pathify";
-import client from "@/directus";
+import { get } from "vuex-pathify";
 
 export default {
     name: "BlogPosts",
-    components: {
-        Author
-    },
+    props: ['savedPost', 'savedTags', 'savedBlogTags'],
     methods: {
-        async getPosts() {
-            if (_.isObject(this.savedPost)) {
-                return;
-            }
-            const response = await client.getItems('blog');
-            this.savedPost = response.data;
-        },
-        async getBlogTags() {
-            if (_.isObject(this.savedBlogTags)) {
-                return;
-            }
-            const response = await client.getItems('blog_tags');
-            this.savedBlogTags = response.data;
-        },
-        async getTags() {
-            if (_.isObject(this.savedTags)) {
-                return;
-            }
-            const response = await client.getItems('tags');
-            this.savedTags = response.data;
-        },
         getPostTags(postId) {
             if (!this.savedBlogTags) {
-                return [];
+                return;
             }
             const blogTags = _.cloneDeep(this.savedBlogTags);
             
@@ -75,6 +50,9 @@ export default {
         },
         convertTagIdToTag(tagId) {
             const tags = _.cloneDeep(this.savedTags);
+            if (!tags) {
+                return;
+            }
             return tags.find(tag => tag.id === tagId)['tag'];
         },
         publishedDate(published_date) {
@@ -85,9 +63,6 @@ export default {
         }
     },
     computed: {
-        savedPost: sync('BlogPosts'),
-        savedBlogTags: sync('BlogTags'),
-        savedTags: sync('Tags'), 
         filter: get('Filter'),
         orderedPosts() {
             return _.sortBy(this.filteredPosts, x => {
@@ -104,11 +79,6 @@ export default {
             return _.cloneDeep(this.savedPost).filter(post => _.includes(filteredBlogTags, post.id));
             
         }
-    },
-    async beforeMount() {
-        await this.getPosts();
-        await this.getBlogTags();
-        await this.getTags();
     }
 };
 </script>

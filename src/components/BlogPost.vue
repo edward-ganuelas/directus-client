@@ -39,11 +39,10 @@ export default {
         async getPost() {
             let response = await client.getItem('blog', this.id);
             this.post = response.data;
-            this.updateMetaData();
-            // window.setTimeout(() => {
-            //     this.updateMetaData();
-            //     this.$emit("updateHead");
-            // }, 2000);
+            window.setTimeout(() => {
+                this.updateMetaData();
+                this.$emit("updateHead");
+            }, 0);
         },
         async getBlogTags() {
             if (_.isObject(this.savedBlogTags)) {
