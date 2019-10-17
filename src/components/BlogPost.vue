@@ -4,11 +4,11 @@
       <row>
         <div class="col-12">
           <h2>{{ post.title }}</h2>
-          <author v-bind:author="post.author" v-if="post.author" />
-          <p v-if="post.published_date" class="publishedDate">
-            Published on {{ publishedDate(post.published_date) }}
+          <p class="author">Edward Ganuelas</p>
+          <p v-if="post.publish_date" class="publishedDate">
+            Published on {{ publishedDate(post.publish_date) }}
           </p>
-          <div v-html="post.content"></div>
+          <div v-html="post.post"></div>
         </div>
       </row>
       <row>
@@ -19,38 +19,48 @@
 </template>
 
 <script>
-// import axios from "axios";
-import { API } from "@/constants";
-import Author from "@/components/Author";
-import axios from "axios";
+import { sync } from 'vuex-pathify';
+import client from '@/directus';
+import moment from 'moment';
+import _ from 'lodash';
 
 export default {
     name: "BlogPost",
     props: ["id"],
-    components: {
-        Author
-    },
     data() {
         return {
             post: "",
-            keywords: "",
             title: "",
+            keywords: "",
             description: ""
         };
     },
     methods: {
         async getPost() {
-            let response = await axios.get(`${API.post}${this.id}`);
-            this.post = response.data.data;
-            localStorage.setItem(API.post + this.id, JSON.stringify(this.post));
-            window.setTimeout(() => {
-                this.updateMetaData();
-                this.$emit("updateHead");
-            }, 2000);
+            let response = await client.getItem('blog', this.id);
+            this.post = response.data;
+            this.updateMetaData();
+            // window.setTimeout(() => {
+            //     this.updateMetaData();
+            //     this.$emit("updateHead");
+            // }, 2000);
+        },
+        async getBlogTags() {
+            if (_.isObject(this.savedBlogTags)) {
+                return;
+            }
+            const response = await client.getItems('blog_tags');
+            this.savedBlogTags = response.data;
+        },
+        async getTags() {
+            if (_.isObject(this.savedTags)) {
+                return;
+            }
+            const response = await client.getItems('tags');
+            this.savedTags = response.data;
         },
         publishedDate(published_date) {
-            let date = new Date(published_date);
-            return date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+            return moment(published_date).format('MMM D YYYY');
         },
         updateMetaData() {
             this.title = this.post.title;
@@ -58,20 +68,23 @@ export default {
             this.description = this.post.excerpt;
         },
         getKeyWords() {
-            let keywords = [];
-            this.post.tags.data.forEach(x => {
-                keywords.push(x.tag);
-            });
-            return keywords.join();
+            if (!this.savedBlogTags) {
+                return [];
+            }
+            const blogTags = _.cloneDeep(this.savedBlogTags);
+            const savedTags = _.cloneDeep(this.savedTags);
+            const tagIds = blogTags.filter(blogTag => blogTag.blog_id === parseInt(this.id)).map(blogTag => blogTag.tags_id);
+            return savedTags.filter(tag=> _.includes(tagIds, tag.id)).map(tag=> tag.tag).join(',');
         }
     },
+    computed: {
+        savedBlogTags: sync('BlogTags'),
+        savedTags: sync('Tags'), 
+    },
     beforeMount() {
-        if (localStorage.getItem(API.post + this.id) === null) {
-            this.getPost();
-        } else {
-            this.post = JSON.parse(localStorage.getItem(API.post + this.id));
-            this.updateMetaData();
-        }
+        this.getPost();
+        this.getBlogTags();
+        this.getTags();
         this.$ga.page({
             page: "/post",
             title: this.post.title,
@@ -87,7 +100,7 @@ export default {
         meta() {
             return [
                 { name: "description", content: this.description },
-                { name: "keywords", content: this.description }
+                { name: "keywords", content: this.keywords }
             ];
         }
     }
@@ -104,5 +117,8 @@ export default {
   .publishedDate {
     text-align: center;
   }
+}
+.author {
+    text-align: center;
 }
 </style>

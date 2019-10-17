@@ -14,12 +14,12 @@
                         Clear
                 </button>
             </div>
-            <div class="col" v-for="tag in filters" v-bind:id="tag.id" :key="tag.id">
+            <div class="col" v-for="tag in savedTags" v-bind:id="tag.id" :key="tag.id">
                 <button
                     type="button"
                     class="btn btn-secondary"
-                    @click="onFilterClick(tag.tag)"
-                    :disabled="tag.tag === filter">
+                    @click="onFilterClick(tag.tag, tag.id)"
+                    :disabled="tag.id === filter">
                     {{ tag.tag }}
                 </button>
             </div>
@@ -28,26 +28,25 @@
 </template>
 
 <script>
-import { API } from "../constants";
-import { sync } from "vuex-pathify";
-import axios from "axios";
+import _ from 'lodash';
+import { sync } from 'vuex-pathify';
+import client from '@/directus';
 
 export default {
-    name: "BlogFilters",
+    name: 'BlogFilters',
     methods: {
-        async getFilters() {
-            const response = await axios.get(API.tags);
-            this.filters = response.data.data;
-            localStorage.setItem(
-                "blog-eightray-filters",
-                JSON.stringify(response.data.data)
-            );
+        async getTags() {
+            if (_.isObject(this.savedTags)) {
+                return;
+            }
+            const response = await client.getItems('tags');
+            this.savedTags = response.data;
         },
-        onFilterClick(filter) {
+        onFilterClick(filter, tagId) {
             if (filter === "clear") {
                 this.filter = "";
             } else {
-                this.filter = filter;
+                this.filter = tagId;
             }
             this.$ga.event({
                 eventCategory: `Filter ${filter}`,
@@ -56,25 +55,12 @@ export default {
         }
     },
     computed: {
-        filters: sync("Filters"),
+        savedTags: sync("Tags"),
         filter: sync("Filter")
     },
 
     beforeMount() {
-        const filter = localStorage.getItem("blog-eightray-filters");
-        const today = Date.now();
-        const lastFetch = localStorage.getItem("blog-eightray-last-update");
-        const milisecondsToDay = 86400000;
-        const daysSinceLastUpdate = today - lastFetch;
-        if (!filter) {
-            this.getFilters();
-        } else {
-            if (daysSinceLastUpdate > milisecondsToDay) {
-                this.getFilters();
-            } else {
-                this.filters = JSON.parse(filter);
-            }
-        }
+        this.getTags();
     }
 };
 </script>
