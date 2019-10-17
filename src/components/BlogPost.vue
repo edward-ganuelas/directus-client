@@ -19,45 +19,23 @@
 </template>
 
 <script>
-import { sync } from 'vuex-pathify';
-import client from '@/directus';
+import mixin from '@/mixins/mixin';
 import moment from 'moment';
 import _ from 'lodash';
 
 export default {
-    name: "BlogPost",
-    props: ["id"],
+    name: 'BlogPost',
+    props: ['id'],
+    mixins: [mixin],
     data() {
         return {
-            post: "",
-            title: "",
-            keywords: "",
-            description: ""
+            post: '',
+            title: '',
+            keywords: '',
+            description: ''
         };
     },
     methods: {
-        async getPost() {
-            let response = await client.getItem('blog', this.id);
-            this.post = response.data;
-            window.setTimeout(() => {
-                this.updateMetaData();
-                this.$emit("updateHead");
-            }, 0);
-        },
-        async getBlogTags() {
-            if (_.isObject(this.savedBlogTags)) {
-                return;
-            }
-            const response = await client.getItems('blog_tags');
-            this.savedBlogTags = response.data;
-        },
-        async getTags() {
-            if (_.isObject(this.savedTags)) {
-                return;
-            }
-            const response = await client.getItems('tags');
-            this.savedTags = response.data;
-        },
         publishedDate(published_date) {
             return moment(published_date).format('MMM D YYYY');
         },
@@ -76,16 +54,12 @@ export default {
             return savedTags.filter(tag=> _.includes(tagIds, tag.id)).map(tag=> tag.tag).join(',');
         }
     },
-    computed: {
-        savedBlogTags: sync('BlogTags'),
-        savedTags: sync('Tags'), 
-    },
     beforeMount() {
         this.getPost();
         this.getBlogTags();
         this.getTags();
         this.$ga.page({
-            page: "/post",
+            page: '/post',
             title: this.post.title,
             location: window.location.href
         });
@@ -98,8 +72,8 @@ export default {
         },
         meta() {
             return [
-                { name: "description", content: this.description },
-                { name: "keywords", content: this.keywords }
+                { name: 'description', content: this.description },
+                { name: 'keywords', content: this.keywords }
             ];
         }
     }

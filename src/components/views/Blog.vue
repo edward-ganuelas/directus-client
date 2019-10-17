@@ -14,44 +14,16 @@
 </template>
 
 <script>
-import _ from "lodash";
-import { sync } from "vuex-pathify";
-import client from "@/directus";
-import BlogFilters from "@/components/BlogFilters";
-import BlogPosts from "@/components/BlogPosts";
+import BlogFilters from '@/components/BlogFilters';
+import BlogPosts from '@/components/BlogPosts';
+import mixin from '@/mixins/mixin';
+
 export default {
-    name: "blog",
+    name: 'blog',
+    mixins: [mixin],
     components: {
-        "blog-filters": BlogFilters,
-        "blog-posts": BlogPosts
-    },
-    methods: {
-        async getPosts() {
-            if (_.isObject(this.savedPost)) {
-                return;
-            }
-            const response = await client.getItems('blog');
-            this.savedPost = response.data;
-        },
-        async getBlogTags() {
-            if (_.isObject(this.savedBlogTags)) {
-                return;
-            }
-            const response = await client.getItems('blog_tags');
-            this.savedBlogTags = response.data;
-        },
-        async getTags() {
-            if (_.isObject(this.savedTags)) {
-                return;
-            }
-            const response = await client.getItems('tags');
-            this.savedTags = response.data;
-        },
-    },
-    computed: {
-        savedPost: sync('BlogPosts'),
-        savedBlogTags: sync('BlogTags'),
-        savedTags: sync('Tags'), 
+        'blog-filters': BlogFilters,
+        'blog-posts': BlogPosts
     },
     async beforeMount() {
         await this.getPosts();
