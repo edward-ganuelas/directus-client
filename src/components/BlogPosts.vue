@@ -5,14 +5,14 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <h2 class="headline card-title">{{ post.title }}</h2>
-                        <author v-bind:author="post.author" v-if="post.author" />
-                        <p v-if="post.published_date">
-                            Published on {{ publishedDate(post.published_date) }}
+                        <p class="author">Edward Ganuelas</p>
+                        <p v-if="post.publish_date">
+                            Published on {{ publishedDate(post.publish_date) }}
                         </p>
-                        <ul v-if="post.tags.data.length > 0" class="tags">
+                        <ul v-if="getPostTags(post.id)" class="tags">
                             <li>Tags:</li>
-                            <li v-for="tag in post['tags'].data" :key="tag.id">
-                                {{ tag.tag }}
+                            <li v-for="tag in getPostTags(post.id)" :key="tag.id">
+                                {{ convertTagIdToTag(tag.tags_id) }}
                             </li>
                         </ul>
                         <blockquote class="card-text">{{ post.excerpt }}</blockquote>
@@ -32,86 +32,52 @@
 </template>
 
 <script>
-import { API } from "@/constants";
-import Author from "@/components/Author";
 import _ from "lodash";
-import { get, sync } from "vuex-pathify";
-import axios from "axios";
+import moment from 'moment';
+import { get } from "vuex-pathify";
+
 export default {
-    name: "BlogPosts",
-    components: {
-        Author
-    },
+    name: 'BlogPosts',
+    props: ['savedPost', 'savedTags', 'savedBlogTags'],
     methods: {
-        async getPosts() {
-            const response = await axios.get(API.post);
-            this.savedPost = response.data.data;
-            localStorage.setItem("blog-eightray", JSON.stringify(response.data.data));
-            localStorage.setItem("blog-eightray-last-update", Date.now());
+        getPostTags(postId) {
+            if (!this.savedBlogTags) {
+                return;
+            }
+            const blogTags = _.cloneDeep(this.savedBlogTags);
+            
+            return blogTags.filter(blogTag => blogTag.blog_id === postId);
+        },
+        convertTagIdToTag(tagId) {
+            const tags = _.cloneDeep(this.savedTags);
+            if (!tags) {
+                return;
+            }
+            return tags.find(tag => tag.id === tagId)['tag'];
         },
         publishedDate(published_date) {
-            let date = new Date(published_date);
-            const months = [
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December"
-            ];
-            return `${date.getDate()}/${months[date.getMonth()]}/${date.getFullYear()}`;
+            return moment(published_date).format('MMM D YYYY');
         },
         kebabTitle(title) {
             return _.kebabCase(title);
         }
     },
     computed: {
-        savedPost: sync("BlogPosts"),
-        filter: get("Filter"),
+        filter: get('Filter'),
         orderedPosts() {
             return _.sortBy(this.filteredPosts, x => {
                 return new Date(x.published_date);
             }).reverse();
         },
         filteredPosts() {
-            if (this.filter === "") {
+            if (this.filter === '') {
                 return this.savedPost;
             }
-            let filteredPosts = this.savedPost;
-            // filteredPosts = 'test';
-            filteredPosts = filteredPosts.filter(x => {
-                let filterCheck = false;
-                x.tags.data.forEach(element => {
-                    if (element.tag === this.filter) {
-                        filterCheck = true;
-                    }
-                });
-                return filterCheck;
-            });
-
-            return filteredPosts;
-        }
-    },
-    beforeMount() {
-        const posts = localStorage.getItem("blog-eightray");
-        const today = Date.now();
-        const lastFetch = localStorage.getItem("blog-eightray-last-update");
-        const milisecondsToDay = 86400000;
-        const daysSinceLastUpdate = today - lastFetch;
-        if (!posts) {
-            this.getPosts();
-        } else {
-            if (daysSinceLastUpdate > milisecondsToDay) {
-                this.getPosts();
-            } else {
-                this.savedPost = JSON.parse(posts);
-            }
+            const savedBlogTags = _.cloneDeep(this.savedBlogTags);
+            const filteredBlogTags = savedBlogTags.filter(blogTag => blogTag.tags_id === this.filter)
+                .map(blogTag => blogTag.blog_id);
+            return _.cloneDeep(this.savedPost).filter(post => _.includes(filteredBlogTags, post.id));
+            
         }
     }
 };

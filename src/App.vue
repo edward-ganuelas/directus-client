@@ -13,7 +13,7 @@
         <container>
             <row>
                 <transition name="slideLeft" leave-active-class="dissapear">
-                <router-view></router-view>
+                    <router-view></router-view>
                 </transition>
             </row>
             <row>
