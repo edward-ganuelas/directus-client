@@ -6,13 +6,13 @@
                     <div class="card-body">
                         <h2 class="headline card-title">{{ post.title }}</h2>
                         <author v-bind:author="post.author" v-if="post.author" />
-                        <p v-if="post.published_date">
-                            Published on {{ publishedDate(post.published_date) }}
+                        <p v-if="post.publish_date">
+                            Published on {{ publishedDate(post.publish_date) }}
                         </p>
-                        <ul v-if="post.tags.data.length > 0" class="tags">
+                        <ul v-if="getPostTags(post.id)" class="tags">
                             <li>Tags:</li>
-                            <li v-for="tag in post['tags'].data" :key="tag.id">
-                                {{ tag.tag }}
+                            <li v-for="tag in getPostTags(post.id)" :key="tag.id">
+                                {{ convertTagIdToTag(tag.tags_id) }}
                             </li>
                         </ul>
                         <blockquote class="card-text">{{ post.excerpt }}</blockquote>
@@ -32,11 +32,10 @@
 </template>
 
 <script>
-import { API } from "@/constants";
 import Author from "@/components/Author";
 import _ from "lodash";
+import moment from 'moment';
 import { get, sync } from "vuex-pathify";
-import axios from "axios";
 import client from "@/directus";
 
 export default {
@@ -46,38 +45,37 @@ export default {
     },
     methods: {
         async getPosts() {
-            // const response = await axios.get(API.post);
-            // this.savedPost = response.data.data;
-            const response = await client.getItems("blog")
+            const response = await client.getItems('blog');
             this.savedPost = response.data;
-            localStorage.setItem("blog-eightray", JSON.stringify(response.data.data));
-            localStorage.setItem("blog-eightray-last-update", Date.now());
+        },
+        async getBlogTags() {
+            const response = await client.getItems('blog_tags');
+            this.savedBlogTags = response.data;
+        },
+        async getTags() {
+            const response = await client.getItems('tags');
+            this.savedTags = response.data;
+        },
+        getPostTags(postId) {
+            const blogTags = _.cloneDeep(this.savedBlogTags);
+            return blogTags.filter(blogTag => blogTag.blog_id === postId);
+        },
+        convertTagIdToTag(tagId) {
+            const tags = _.cloneDeep(this.savedTags);
+            return tags.find(tag => tag.id === tagId)['tag'];
         },
         publishedDate(published_date) {
-            let date = new Date(published_date);
-            const months = [
-                "January",
-                "February",
-                "March",
-                "April",
-                "May",
-                "June",
-                "July",
-                "August",
-                "September",
-                "October",
-                "November",
-                "December"
-            ];
-            return `${date.getDate()}/${months[date.getMonth()]}/${date.getFullYear()}`;
+            return moment(published_date).format('MMM D YYYY');
         },
         kebabTitle(title) {
             return _.kebabCase(title);
         }
     },
     computed: {
-        savedPost: sync("BlogPosts"),
-        filter: get("Filter"),
+        savedPost: sync('BlogPosts'),
+        savedBlogTags: sync('BlogTags'),
+        savedTags: sync('Tags'), 
+        filter: get('Filter'),
         orderedPosts() {
             return _.sortBy(this.filteredPosts, x => {
                 return new Date(x.published_date);
@@ -102,21 +100,10 @@ export default {
             return filteredPosts;
         }
     },
-    beforeMount() {
-        const posts = localStorage.getItem("blog-eightray");
-        const today = Date.now();
-        const lastFetch = localStorage.getItem("blog-eightray-last-update");
-        const milisecondsToDay = 86400000;
-        const daysSinceLastUpdate = today - lastFetch;
-        if (!posts) {
-            this.getPosts();
-        } else {
-            if (daysSinceLastUpdate > milisecondsToDay) {
-                this.getPosts();
-            } else {
-                this.savedPost = JSON.parse(posts);
-            }
-        }
+    async beforeMount() {
+        this.getPosts();
+        this.getBlogTags();
+        this.getTags();
     }
 };
 </script>

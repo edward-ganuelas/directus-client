@@ -8,6 +8,8 @@ Vue.use(Vuex);
 
 const state = {
     BlogPosts: "",
+    BlogTags: "",
+    Tags: "",
     Filters: "",
     Filter: ""
 };
