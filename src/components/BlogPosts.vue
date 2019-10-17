@@ -37,6 +37,8 @@ import Author from "@/components/Author";
 import _ from "lodash";
 import { get, sync } from "vuex-pathify";
 import axios from "axios";
+import client from "@/directus";
+
 export default {
     name: "BlogPosts",
     components: {
@@ -44,8 +46,10 @@ export default {
     },
     methods: {
         async getPosts() {
-            const response = await axios.get(API.post);
-            this.savedPost = response.data.data;
+            // const response = await axios.get(API.post);
+            // this.savedPost = response.data.data;
+            const response = await client.getItems("blog")
+            this.savedPost = response.data;
             localStorage.setItem("blog-eightray", JSON.stringify(response.data.data));
             localStorage.setItem("blog-eightray-last-update", Date.now());
         },

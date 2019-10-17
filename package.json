@@ -11,6 +11,7 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@directus/sdk-js": "^6.0.0-alpha.5",
     "axios": "^0.18.1",
     "babel-polyfill": "^6.26.0",
     "bootstrap": "^4.1.3",
