@@ -19,7 +19,7 @@
                     type="button"
                     class="btn btn-secondary"
                     @click="onFilterClick(tag.tag, tag.id)"
-                    :disabled="tag.tag === filter">
+                    :disabled="tag.id === filter">
                     {{ tag.tag }}
                 </button>
             </div>
