@@ -37,7 +37,7 @@ import moment from 'moment';
 import { get } from "vuex-pathify";
 
 export default {
-    name: "BlogPosts",
+    name: 'BlogPosts',
     props: ['savedPost', 'savedTags', 'savedBlogTags'],
     methods: {
         getPostTags(postId) {
@@ -70,7 +70,7 @@ export default {
             }).reverse();
         },
         filteredPosts() {
-            if (this.filter === "") {
+            if (this.filter === '') {
                 return this.savedPost;
             }
             const savedBlogTags = _.cloneDeep(this.savedBlogTags);

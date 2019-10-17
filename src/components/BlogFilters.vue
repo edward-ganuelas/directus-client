@@ -35,19 +35,19 @@ export default {
     props: ['savedTags'],
     methods: {
         onFilterClick(filter, tagId) {
-            if (filter === "clear") {
-                this.filter = "";
+            if (filter === 'clear') {
+                this.filter = '';
             } else {
                 this.filter = tagId;
             }
             this.$ga.event({
                 eventCategory: `Filter ${filter}`,
-                eventAction: "click"
+                eventAction: 'click'
             });
         }
     },
     computed: {
-        filter: sync("Filter")
+        filter: sync('Filter')
     }
 };
 </script>
