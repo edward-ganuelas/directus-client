@@ -8,7 +8,11 @@ export default {
             if (_.isObject(this.savedPost)) {
                 return;
             }
-            const response = await client.getItems('blog');
+            const response = await client.getItems('blog', {
+                filter: {
+                    blog_type: "tech"
+                }
+            });
             this.savedPost = response.data;
         },
         async getBlogTags() {
@@ -22,7 +26,11 @@ export default {
             if (_.isObject(this.savedTags)) {
                 return;
             }
-            const response = await client.getItems('tags');
+            const response = await client.getItems('tags', {
+                filter: {
+                    tag_type: "tech",
+                }
+            });
             this.savedTags = response.data;
         },
     },
