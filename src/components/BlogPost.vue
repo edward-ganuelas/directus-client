@@ -21,6 +21,7 @@
 <script>
 import mixin from '@/mixins/mixin';
 import moment from 'moment';
+import client from "@/directus";
 import _ from 'lodash';
 
 export default {
@@ -36,6 +37,11 @@ export default {
         };
     },
     methods: {
+        async getPost() {
+            const response = await client.getItem('blog', this.id);
+            this.post = response.data;
+            this.updateMetaData();
+        },
         publishedDate(published_date) {
             return moment(published_date).format('MMM D YYYY');
         },
