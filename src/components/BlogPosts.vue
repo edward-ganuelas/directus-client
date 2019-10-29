@@ -1,7 +1,7 @@
 <template>
     <div class="col-12">
-        <transition-group name="fade" leave-active-class="fadeOutRight">
-            <div class="col-12" v-for="post in orderedPosts" v-bind:key="post.id">
+        <carousel-3d :loop="false" height="350" width="350" :controlsVisible="true" :count="orderedPosts.length">
+            <slide class="col-12" v-for="(post, index) in orderedPosts" v-bind:key="post.id" :index="index">
                 <div class="card shadow">
                     <div class="card-body">
                         <h2 class="headline card-title">{{ post.title }}</h2>
@@ -26,18 +26,23 @@
                         </router-link>
                     </div>
                 </div>
-            </div>
-        </transition-group>
+            </slide>
+        </carousel-3d>
     </div>
 </template>
 
 <script>
 import _ from "lodash";
+import { Carousel3d, Slide } from 'vue-carousel-3d';
 import moment from 'moment';
 import { get } from "vuex-pathify";
 
 export default {
     name: 'BlogPosts',
+    components: {
+        Carousel3d,
+        Slide
+    },
     props: ['savedPost', 'savedTags', 'savedBlogTags'],
     methods: {
         getPostTags(postId) {
