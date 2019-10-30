@@ -1,6 +1,6 @@
 <template>
     <div class="col-12">
-        <carousel-3d :loop="false" height="350" width="350" :controlsVisible="true" :count="orderedPosts.length">
+        <carousel-3d :loop="false" height="400" width="400" :controlsVisible="true" v-if="orderedPosts.length > 0" :count="orderedPosts.length">
             <slide class="col-12" v-for="(post, index) in orderedPosts" v-bind:key="post.id" :index="index">
                 <div class="card shadow">
                     <div class="card-body">
@@ -97,26 +97,21 @@ export default {
 ul {
   display: flex;
   flex-wrap: wrap;
-  padding: 0 8px;
   width: 100%;
   li {
     display: inline-block;
     margin-right: 10px;
     &:first-child {
-      margin-left: 18px;
     }
   }
   &.tags {
-    width: 50%;
-    margin: 0 auto 1rem auto;
+    padding: 0;
+    font-size: 0.75rem;
   }
 }
 .card__actions {
   .btn {
     margin-left: 18px;
   }
-}
-.card {
-  margin-bottom: 18px;
 }
 </style>
