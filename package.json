@@ -20,6 +20,7 @@
     "moment": "^2.24.0",
     "vue": "^2.6.10",
     "vue-analytics": "^5.12.3",
+    "vue-carousel-3d": "^0.2.0",
     "vue-head": "^2.0.11",
     "vue-router": "^3.0.3",
     "vue2-animate": "^1.0.4",
