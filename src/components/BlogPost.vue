@@ -21,7 +21,7 @@
 <script>
 import mixin from '@/mixins/mixin';
 import moment from 'moment';
-import client from "@/directus";
+import client from '@/directus';
 import _ from 'lodash';
 
 export default {

@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import _ from "lodash";
+import _ from 'lodash';
 import { Carousel3d, Slide } from 'vue-carousel-3d';
 import moment from 'moment';
-import { get } from "vuex-pathify";
+import { get } from 'vuex-pathify';
 
 export default {
     name: 'BlogPosts',
