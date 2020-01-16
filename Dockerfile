@@ -2,8 +2,14 @@
 FROM node:10.16 as build-stage
 WORKDIR /
 COPY . .
-RUN yarn 
-RUN yarn build
+
+RUN apk --no-cache --virtual build-dependencies add \
+    python \
+    make \
+    g++ \
+    && yarn \
+    && yarn build \
+    && apk del build-dependencies
 
 # production stage
 FROM nginx:stable-alpine as production-stage

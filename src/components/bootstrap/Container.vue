@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    name: "Container",
+    name: 'Container',
     props: {
         fluid: Boolean,
         classes: String

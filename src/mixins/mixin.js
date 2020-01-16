@@ -1,6 +1,6 @@
-import _ from "lodash";
-import { sync } from "vuex-pathify";
-import client from "@/directus";
+import _ from 'lodash';
+import { sync } from 'vuex-pathify';
+import client from '@/directus';
 
 export default {
     methods: {
@@ -10,7 +10,7 @@ export default {
             }
             const response = await client.getItems('blog', {
                 filter: {
-                    blog_type: "tech"
+                    blog_type: 'tech'
                 }
             });
             this.savedPost = response.data;
@@ -28,7 +28,7 @@ export default {
             }
             const response = await client.getItems('tags', {
                 filter: {
-                    tag_type: "tech",
+                    tag_type: 'tech',
                 }
             });
             this.savedTags = response.data;

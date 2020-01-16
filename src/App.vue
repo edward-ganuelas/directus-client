@@ -27,7 +27,7 @@
 
 <script>
 export default {
-    name: "app"
+    name: 'app'
 };
 </script>
 
@@ -73,9 +73,6 @@ h6 {
 .dissapear {
   display: none;
 }
-.card {
-  padding: 25px 0;
-}
 .footer {
   p {
     text-align: center;
@@ -86,5 +83,9 @@ a {
   &:visited {
     color: #ff9900;
   }
+}
+.card {
+  background-color: transparent;
+  border-color: transparent;
 }
 </style>
